@@ -175,7 +175,7 @@ export default class CustomerServiceMock implements ICustomerService {
         "Phone": "(206) 555-4112",
         "Fax": "(206) 555-4115"
         }
-    ]
+    ];
 
     public getCustomer(customerID: string) {
         var result: ICustomer;

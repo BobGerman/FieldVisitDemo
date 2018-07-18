@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
-import { Version } from '@microsoft/sp-core-library';
+import { Version, Environment } from '@microsoft/sp-core-library';
 import {
   BaseClientSideWebPart,
   IPropertyPaneConfiguration,
@@ -11,6 +11,10 @@ import * as strings from 'FieldVisitsWebPartStrings';
 import FieldVisits from './components/FieldVisits/FieldVisits';
 import { IFieldVisitsProps } from './components/FieldVisits/IFieldVisitsProps';
 
+import { IVisit } from './model/IVisit';
+import ServiceFactory from './services/ServiceFactory';
+
+
 export interface IFieldVisitsWebPartProps {
   description: string;
 }
@@ -18,10 +22,17 @@ export interface IFieldVisitsWebPartProps {
 export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisitsWebPartProps> {
 
   public render(): void {
+
+    const visitService = ServiceFactory.getVisitService(Environment.type);
+    const visits = visitService.getMyVisits();
+    var summary = "";
+    visits.forEach(visit => {
+      summary += `${visit.calendarItem.Title}: ${visit.customer.CompanyName}`;
+    });
     const element: React.ReactElement<IFieldVisitsProps > = React.createElement(
       FieldVisits,
       {
-        description: this.properties.description
+        description: summary // this.properties.description
       }
     );
 

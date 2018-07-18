@@ -1,7 +1,10 @@
 import * as React from 'react';
-import styles from './FieldVisits.module.scss';
+import styles from '../FieldVisits.module.scss';
 import { IFieldVisitsProps } from './IFieldVisitsProps';
 import { escape } from '@microsoft/sp-lodash-subset';
+
+import { ICustomer } from '../../model/ICustomer';
+import { IVisit } from '../../model/IVisit';
 
 export default class FieldVisits extends React.Component<IFieldVisitsProps, {}> {
   public render(): React.ReactElement<IFieldVisitsProps> {

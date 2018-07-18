@@ -8,8 +8,8 @@ import {
 } from '@microsoft/sp-webpart-base';
 
 import * as strings from 'FieldVisitsWebPartStrings';
-import FieldVisits from './components/FieldVisits';
-import { IFieldVisitsProps } from './components/IFieldVisitsProps';
+import FieldVisits from './components/FieldVisits/FieldVisits';
+import { IFieldVisitsProps } from './components/FieldVisits/IFieldVisitsProps';
 
 export interface IFieldVisitsWebPartProps {
   description: string;

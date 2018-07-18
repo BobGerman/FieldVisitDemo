@@ -1,12 +1,7 @@
+import { ICalendarItem } from './ICalendarItem';
 import { ICustomer } from './ICustomer';
 
 export interface IVisit {
-    title: string;
-    dateTime: Date;
-    location: string;
-    coordinates: {
-        latitude: number;
-        longitude: number;
-    };
+    calendarItem: ICalendarItem;
     customer: ICustomer;
 }

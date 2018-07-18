@@ -1,6 +1,6 @@
-import { IVisit } from '../../model/IVisit';
-import { ICustomer } from '../../model/ICustomer';
+import { ICalendarItem } from '../../model/ICalendarItem';
 
 export interface ICalendarService {
-    getVisitCalendarForMe () : IVisit[];
+    
+    getMyCalendarItems () : ICalendarItem[];
 }

@@ -1,9 +1,9 @@
 export interface ICalendarItem {
-    title: string;
-    dateTime: Date;
-    location: string;
-    coordinates: {
-        latitude: number;
-        longitude: number;
+    Title: string;
+    DateTime: Date;
+    Location: string;
+    Coordinates: {
+        Latitude: number;
+        Longitude: number;
     };
 }

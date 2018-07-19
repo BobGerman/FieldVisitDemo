@@ -8,12 +8,11 @@ import {
 } from '@microsoft/sp-webpart-base';
 
 import * as strings from 'FieldVisitsWebPartStrings';
-import FieldVisits from './components/FieldVisits/FieldVisits';
-import { IFieldVisitsProps } from './components/FieldVisits/IFieldVisitsProps';
+import { IFieldVisitsProps, FieldVisits }
+  from './components/FieldVisits/FieldVisits';
 
 import { IVisit } from './model/IVisit';
 import ServiceFactory from './services/ServiceFactory';
-
 
 export interface IFieldVisitsWebPartProps {
   description: string;
@@ -24,15 +23,12 @@ export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisi
   public render(): void {
 
     const visitService = ServiceFactory.getVisitService(Environment.type);
-    const visits = visitService.getMyVisits();
-    var summary = "";
-    visits.forEach(visit => {
-      summary += `${visit.calendarItem.Title}: ${visit.customer.CompanyName}`;
-    });
+
     const element: React.ReactElement<IFieldVisitsProps > = React.createElement(
       FieldVisits,
       {
-        description: summary // this.properties.description
+        description: this.properties.description,
+        visitService: visitService
       }
     );
 

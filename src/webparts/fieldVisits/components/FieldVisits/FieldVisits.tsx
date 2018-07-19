@@ -31,9 +31,12 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
   public render(): React.ReactElement<IFieldVisitsProps> {
 
     if (!this.state.visitsFetched) {
-      this.setState ({
-        visits: this.props.visitService.getMyVisits(),
-        visitsFetched: true
+      this.props.visitService.getMyVisits()
+      .then ((visits) => {
+        this.setState ({
+          visits: visits,
+          visitsFetched: true
+        });
       });
     }
 

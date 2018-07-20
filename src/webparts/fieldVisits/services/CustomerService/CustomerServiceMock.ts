@@ -182,6 +182,8 @@ export default class CustomerServiceMock implements ICustomerService {
 
         result = this.mockItems.filter(c => c.CustomerID == customerID)[0];
 
-        return result;
+        return new Promise<ICustomer>((resolve) => {
+            resolve(result);
+        });
     }
 }

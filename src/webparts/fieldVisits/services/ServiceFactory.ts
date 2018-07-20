@@ -6,7 +6,6 @@ import { ICalendarService } from './CalendarService/ICalendarService';
 import CalendarServiceMock from './CalendarService/CalendarServiceMock';
 
 import { EnvironmentType } from '@microsoft/sp-core-library';
-import { ICustomer } from '../../../../lib/webparts/fieldVisits/model/ICustomer';
 
 export default class ServiceFactory {
 

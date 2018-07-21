@@ -9,7 +9,7 @@ import {
 
 import * as strings from 'FieldVisitsWebPartStrings';
 import { IFieldVisitsProps, FieldVisits }
-  from './components/FieldVisits/FieldVisits';
+  from './components/FieldVisits';
 
 import { IVisit } from './model/IVisit';
 import ServiceFactory from './services/ServiceFactory';

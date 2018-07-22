@@ -13,14 +13,14 @@
     border-width: 1px;
   }
 
-  .visitListRowSelected {
-    background-color: $ms-color-themeLight;
-  }
-
   .visitListRow:hover {
     background-color: $ms-color-neutralLight
   }
-
+  
+  .visitListRowSelected, 
+  .visitListRowSelected:hover {
+      background-color: $ms-color-themeLight;
+  }
 
   .visitListDateColumn {
     @include ms-Grid-col;

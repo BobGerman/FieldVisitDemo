@@ -20,7 +20,9 @@ export class VisitList extends React.Component<IVisitListProps, {}> {
       <div className={styles.visitList}>
         {this.props.visits.map(item => (
           <div className={ (item == this.props.selectedVisit) ?
-                            styles.visitListRow + ' ' + styles.visitListRowSelected : styles.visitListRow }>
+                            styles.visitListRow + ' ' + styles.visitListRowSelected : styles.visitListRow }
+               onClick={ () => {this.props.visitSelectionChanged(item) }}
+          >
             <div className={styles.visitListDateColumn}>
               <div className={styles.visitListTime}>
                 {item.calendarItem.DateTime.getHours() % 12}:
@@ -44,4 +46,5 @@ export class VisitList extends React.Component<IVisitListProps, {}> {
       </div>
     );
   }
+
 }  

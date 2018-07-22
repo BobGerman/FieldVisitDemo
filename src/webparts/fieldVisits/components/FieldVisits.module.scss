@@ -1,5 +1,60 @@
 @import '~@microsoft/sp-office-ui-fabric-core/dist/sass/SPFabricCore.scss';
 
+.visitList {
+
+  border-top-style: solid;
+  border-width: 1px;
+
+  .visitListRow {
+    @include ms-Grid-row;
+    border-color: black;
+    border-top-style: hidden;
+    border-bottom-style: solid;
+    border-width: 1px;
+  }
+
+  .visitListDateColumn {
+    @include ms-Grid-col;
+    @include ms-sm4;
+    @include ms-md3;
+    @include ms-lg2;
+  };
+
+  .visitListDetailColumn {
+    @include ms-Grid-col;
+    @include ms-sm5;
+    @include ms-md6;
+    @include ms-lg9;
+  }
+
+  .visitListActionColumn {
+    @include ms-Grid-col;
+    @include ms-sm3;
+    @include ms-md3;
+    @include ms-lg1;
+  }
+
+  .visitListTime {
+    @include ms-font-xl;
+  }
+  
+  .visitListDate {
+    @include ms-font-l;
+  }
+
+  .visitListTitle {
+    @include ms-font-l;
+  }
+
+  .visitListLocation {
+    @include ms-font-s;
+  }
+
+  .visitListContact {
+    @include ms-font-s;
+  }
+}
+
 .fieldVisits {
   .container {
     max-width: 700px;

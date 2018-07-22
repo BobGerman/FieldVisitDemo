@@ -13,9 +13,9 @@ export interface IFieldVisitsProps {
 }
 
 export interface IFieldVisitsState {
-  visitsFetched: boolean;
-  visits: IVisit[];
-  selectedVisit: IVisit;
+  visitsFetched?: boolean;
+  visits?: IVisit[];
+  selectedVisit?: IVisit;
 }
 
 export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisitsState> {
@@ -53,6 +53,6 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
   private handleSelectionChanged(visit: IVisit) {
     this.setState({
       selectedVisit: visit
-    })
+    });
   }
 }

@@ -25,7 +25,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
     this.state = {
       visitsFetched: false,
       visits: [],
-      selectedVisit: null
+      selectedVisit: null   // NOTE If defined, selectedVisit should reference a member of visits[]
     };
   }
 
@@ -36,6 +36,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
       .then ((visits) => {
         this.setState ({
           visits: visits,
+          selectedVisit: visits[1],
           visitsFetched: true
         });
       });

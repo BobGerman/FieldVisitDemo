@@ -13,6 +13,15 @@
     border-width: 1px;
   }
 
+  .visitListRowSelected {
+    background-color: $ms-color-themeLight;
+  }
+
+  .visitListRow:hover {
+    background-color: $ms-color-neutralLight
+  }
+
+
   .visitListDateColumn {
     @include ms-Grid-col;
     @include ms-sm4;
@@ -22,16 +31,9 @@
 
   .visitListDetailColumn {
     @include ms-Grid-col;
-    @include ms-sm5;
-    @include ms-md6;
-    @include ms-lg9;
-  }
-
-  .visitListActionColumn {
-    @include ms-Grid-col;
-    @include ms-sm3;
-    @include ms-md3;
-    @include ms-lg1;
+    @include ms-sm8;
+    @include ms-md9;
+    @include ms-lg10;
   }
 
   .visitListTime {
@@ -39,7 +41,7 @@
   }
   
   .visitListDate {
-    @include ms-font-l;
+    @include ms-font-m;
   }
 
   .visitListTitle {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { escape } from '@microsoft/sp-lodash-subset';
+import { escape, isEmpty } from '@microsoft/sp-lodash-subset';
 import styles from './FieldVisits.module.scss';
 
 import { IVisit } from '../model/IVisit';
@@ -7,51 +7,41 @@ import { IVisit } from '../model/IVisit';
 import { List, IListProps } from 'office-ui-fabric-react/lib/List';
 
 export interface IVisitListProps {
-    visits: IVisit[];
-    selectedVisit: IVisit;
-    visitSelectionChanged: (IVisit) => {};
+  visits: IVisit[];
+  selectedVisit: IVisit;
+  visitSelectionChanged: (IVisit) => {};
 }
-  
+
 export class VisitList extends React.Component<IVisitListProps, {}> {
 
   public render(): React.ReactElement<IVisitListProps> {
 
-    var summary = "";
-    this.props.visits.forEach(visit => {
-      summary += `${visit.calendarItem.Title}: ${visit.customer.CompanyName}`;
-    });
-  
     return (
-      <div className={ styles.visitList }>
-        <List items={this.props.visits} className={ styles["ms-Grid"]}
-              onRenderCell={this.onRenderCell}
-        />
+      <div className={styles.visitList}>
+        {this.props.visits.map(item => (
+          <div className={ (item == this.props.selectedVisit) ?
+                            styles.visitListRow + ' ' + styles.visitListRowSelected : styles.visitListRow }>
+            <div className={styles.visitListDateColumn}>
+              <div className={styles.visitListTime}>
+                {item.calendarItem.DateTime.getHours() % 12}:
+                  {item.calendarItem.DateTime.getMinutes()}&nbsp;
+                  {item.calendarItem.DateTime.getHours() < 12 ? 'am' : 'pm'}
+              </div>
+              <div className={styles.visitListDate}>
+                {item.calendarItem.DateTime.toDateString()}
+              </div>
+            </div>
+            <div className={styles.visitListDetailColumn}>
+              <div className={styles.visitListTitle}>{item.calendarItem.Title}</div>
+              <div className={styles.visitListContact}>
+                {item.customer.CompanyName}&nbsp;
+                ({item.customer.ContactName})
+              </div>
+              <div className={styles.visitListLocation}>{item.calendarItem.Location}</div>
+            </div>
+          </div>
+        )) }
       </div>
-    );
-  }
-
-  
-  private onRenderCell(item: IVisit, index: number | undefined): JSX.Element {
-    return (
-        <div className={ styles.visitListRow }>
-          <div className={ styles.visitListDateColumn }>
-            <div className={ styles.visitListTime }>
-              { '2:00 PM' }
-            </div>
-            <div className={ styles.visitListDate }>
-              {item.calendarItem.DateTime.getDate()}
-            </div>
-          </div>
-          <div className={ styles.visitListDetailColumn }>
-            <div className={ styles.visitListTitle }>{item.customer.CompanyName}</div>
-            <div className={ styles.visitListLocation }>Date</div>
-            <div className={ styles.visitListContact }>Location</div>
-          </div>
-          <div className={ styles.visitListActionColumn }>
-            <div>Open</div>
-            <div>Select</div>
-          </div>
-        </div>
     );
   }
 }  

@@ -17,7 +17,8 @@ export interface IFieldVisitsProps {
 export interface IFieldVisitsState {
   dataFetched?: boolean;
   users?: IUser[]
-  visits?: IVisit[];
+  allVisits?: IVisit[];
+  filteredVisits?: IVisit[];
   selectedVisit?: IVisit;
 }
 
@@ -28,7 +29,8 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
     this.state = {
       dataFetched: false,
       users: [],
-      visits: [],
+      allVisits: [],
+      filteredVisits: [],
       selectedVisit: null   // NOTE If defined, selectedVisit should reference a member of visits[]
     };
   }
@@ -40,7 +42,8 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
       .then ((visits) => {
         this.setState ({
           users: this.getUsersFromVisits(visits),
-          visits: visits,
+          allVisits: visits,
+          filteredVisits: visits,
           selectedVisit: null,
           dataFetched: true
         });
@@ -53,18 +56,12 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
         <UserTabs users={this.state.users} 
                   userSelectionChanged={this.handleUserSelectionChanged.bind(this)}
         />
-        <VisitList visits={this.state.visits}
+        <VisitList visits={this.state.filteredVisits}
                   selectedVisit={this.state.selectedVisit}
-                  visitSelectionChanged={this.handleSelectionChanged.bind(this)}
+                  visitSelectionChanged={this.handleVisitSelectionChanged.bind(this)}
         />
       </div>
     );
-  }
-
-  private handleSelectionChanged(visit: IVisit) {
-    this.setState({
-      selectedVisit: visit
-    });
   }
 
   private handleUserSelectionChanged(user: IUser) {
@@ -78,8 +75,33 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
       newUsers.push(newUser);
     });
     this.setState({
-      users: newUsers
+      users: newUsers,
+      filteredVisits: this.filterVisitsBySelectedUsers(newUsers)
     });
+  }
+
+  private handleVisitSelectionChanged(visit: IVisit) {
+    this.setState({
+      selectedVisit: visit
+    });
+  }
+
+  private filterVisitsBySelectedUsers(users: IUser[]): IVisit[] {
+    var result: IVisit[] = [];
+
+    this.state.allVisits.forEach((visit) => {
+      let showVisit = false;
+      visit.calendarItem.Attendees.forEach((attendee) => {
+        if (users.filter((u) => (u.isSelected && u.email == attendee.email)).length > 0) {
+          showVisit = true;
+        }
+      })
+      if (showVisit) {
+        result.push(visit);
+      }
+    });
+
+    return result;
   }
 
   private getUsersFromVisits(visits: IVisit[]) {
@@ -90,7 +112,11 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
         visit.calendarItem.Attendees.forEach((attendee) => {
           if ((attendee.email != "?? GROUP EMAIL ??") &&
               (result.filter((i:IUser) => (i.email == attendee.email)).length == 0)) {
-                result.push(attendee);
+                result.push({
+                  fullName: attendee.fullName,
+                  email: attendee.email,
+                  isSelected: true
+                });
              }
         })
       }

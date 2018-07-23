@@ -8,6 +8,7 @@ import { IUser } from '../model/IUser';
 
 import { UserTabs } from './UserTabs';
 import { VisitList } from './VisitList';
+import { CompanyInfo } from './CompanyInfo';
 
 export interface IFieldVisitsProps {
   description: string;
@@ -63,6 +64,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
                   selectedVisit={this.state.selectedVisit}
                   visitSelectionChanged={this.handleVisitSelectionChanged.bind(this)}
         />
+        <CompanyInfo visit={this.state.selectedVisit} />
       </div>
     );
   }
@@ -77,9 +79,13 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
       }
       newUsers.push(newUser);
     });
+    var fv = this.filterVisitsBySelectedUsers(this.state.allVisits, newUsers);
+    var sv = fv.filter((v) => (v == this.state.selectedVisit)).length > 0 ?
+              this.state.selectedVisit : null;
     this.setState({
       users: newUsers,
-      filteredVisits: this.filterVisitsBySelectedUsers(this.state.allVisits, newUsers)
+      filteredVisits: fv,
+      selectedVisit: sv
     });
   }
 

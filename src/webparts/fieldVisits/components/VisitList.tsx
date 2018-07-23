@@ -5,8 +5,6 @@ import styles from './FieldVisits.module.scss';
 import { IVisit } from '../model/IVisit';
 import { IUser } from '../model/IUser';
 
-import { List, IListProps } from 'office-ui-fabric-react/lib/List';
-
 export interface IVisitListProps {
   visits: IVisit[];
   selectedVisit: IVisit;

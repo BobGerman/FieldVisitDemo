@@ -7,21 +7,21 @@ export default class CalendarServiceMock implements ICalendarService {
     private mockItems: ICalendarItem[] =
     [
         {
-            Title: "Lonseome Pine follow-up (LONEP)",
+            Title: "Damage assessment: Lonseome Pine follow-up (LONEP)",
             DateTime: new Date(2018, 6, 30, 9, 30, 0),
             Attendees: [
                 { fullName: "User 2", email: "user2@contoso.com" }
             ]
         },
         {
-            Title: "Big Cheese annual inspection (THEBI)",
+            Title: "Damage assessment: Big Cheese annual inspection (THEBI)",
             DateTime: new Date(2018, 6, 30, 11, 0, 0),
             Attendees: [
                 { fullName: "User 1", email: "user1@contoso.com" }
             ]
         },
         {
-            Title: "Lazu K Kountry Store (LAZYK)",
+            Title: "Fire inspection: Lazy K Kountry Store (LAZYK)",
             DateTime: new Date(2018, 6, 30, 15, 30, 0),
             Attendees: [
                 { fullName: "User 3", email: "user3@contoso.com" },

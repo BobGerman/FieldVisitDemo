@@ -28,7 +28,8 @@ export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisi
       FieldVisits,
       {
         description: this.properties.description,
-        visitService: visitService
+        visitService: visitService,
+        currentUserEmail: this.context.pageContext.user.email
       }
     );
 

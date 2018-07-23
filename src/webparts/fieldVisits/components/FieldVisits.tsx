@@ -12,6 +12,7 @@ import { VisitList } from './VisitList';
 export interface IFieldVisitsProps {
   description: string;
   visitService: IVisitService;
+  currentUserEmail: string;
 }
 
 export interface IFieldVisitsState {
@@ -40,10 +41,12 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
     if (!this.state.dataFetched) {
       this.props.visitService.getMyVisits()
       .then ((visits) => {
+        var u = this.getUsersFromVisits(visits);
+        var fv = this.filterVisitsBySelectedUsers(visits, u);
         this.setState ({
-          users: this.getUsersFromVisits(visits),
+          users: u,
           allVisits: visits,
-          filteredVisits: visits,
+          filteredVisits: fv,
           selectedVisit: null,
           dataFetched: true
         });
@@ -76,7 +79,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
     });
     this.setState({
       users: newUsers,
-      filteredVisits: this.filterVisitsBySelectedUsers(newUsers)
+      filteredVisits: this.filterVisitsBySelectedUsers(this.state.allVisits, newUsers)
     });
   }
 
@@ -86,10 +89,10 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
     });
   }
 
-  private filterVisitsBySelectedUsers(users: IUser[]): IVisit[] {
+  private filterVisitsBySelectedUsers(visits: IVisit[], users: IUser[]): IVisit[] {
     var result: IVisit[] = [];
 
-    this.state.allVisits.forEach((visit) => {
+    visits.forEach((visit) => {
       let showVisit = false;
       visit.calendarItem.Attendees.forEach((attendee) => {
         if (users.filter((u) => (u.isSelected && u.email == attendee.email)).length > 0) {
@@ -115,7 +118,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
                 result.push({
                   fullName: attendee.fullName,
                   email: attendee.email,
-                  isSelected: true
+                  isSelected: attendee.email == this.props.currentUserEmail
                 });
              }
         })

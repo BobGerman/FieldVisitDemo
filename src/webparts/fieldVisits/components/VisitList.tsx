@@ -3,6 +3,7 @@ import { escape, isEmpty } from '@microsoft/sp-lodash-subset';
 import styles from './FieldVisits.module.scss';
 
 import { IVisit } from '../model/IVisit';
+import { IUser } from '../model/IUser';
 
 import { List, IListProps } from 'office-ui-fabric-react/lib/List';
 
@@ -16,40 +17,51 @@ export class VisitList extends React.Component<IVisitListProps, {}> {
 
   public render(): React.ReactElement<IVisitListProps> {
 
+    var users: IUser[] = null;
+    this.props.visits.forEach((item) => {
+      if (item.calendarItem.Attendees && item.calendarItem.Attendees.length > 0) {
+        item.calendarItem.Attendees.forEach((attendee) => {
+
+        })
+      }
+    });
+
     return (
-      <div className={styles.visitList}>
-        {this.props.visits.map(item => (
-          <div className={ (item == this.props.selectedVisit) ?
-                            styles.visitListRow + ' ' + styles.visitListRowSelected : styles.visitListRow }
-               onClick={ () => { this.props.visitSelectionChanged(item); }}
-          >
-            <div className={styles.visitListDateColumn}>
-              <div className={styles.visitListTime}>
-                {item.calendarItem.DateTime.getHours() % 12}:
-                {item.calendarItem.DateTime.getMinutes()<10 ? "0" : ""}
-                {item.calendarItem.DateTime.getMinutes()}&nbsp;
-                {item.calendarItem.DateTime.getHours() < 12 ? 'am' : 'pm'}
+      <div>
+        <div className={styles.visitList}>
+          {this.props.visits.map(item => (
+            <div className={ (item == this.props.selectedVisit) ?
+                              styles.visitListRow + ' ' + styles.visitListRowSelected : styles.visitListRow }
+                onClick={ () => { this.props.visitSelectionChanged(item); }}
+            >
+              <div className={styles.visitListDateColumn}>
+                <div className={styles.visitListTime}>
+                  {item.calendarItem.DateTime.getHours() % 12}:
+                  {item.calendarItem.DateTime.getMinutes()<10 ? "0" : ""}
+                  {item.calendarItem.DateTime.getMinutes()}&nbsp;
+                  {item.calendarItem.DateTime.getHours() < 12 ? 'am' : 'pm'}
+                </div>
+                <div className={styles.visitListDate}>
+                  {item.calendarItem.DateTime.toDateString()}
+                </div>
               </div>
-              <div className={styles.visitListDate}>
-                {item.calendarItem.DateTime.toDateString()}
+              <div className={styles.visitListDetailColumn}>
+                <div className={styles.visitListTitle}>{item.calendarItem.Title}</div>
+                <div className={styles.visitListContact}>
+                  {item.customer.CompanyName}&nbsp;
+                  ({item.customer.ContactName})
+                </div>
+                <div className={styles.visitListLocation}>
+                  {item.customer.Address},
+                  {item.customer.City},
+                  {item.customer.Region}&nbsp;
+                  {item.customer.Country}&nbsp;
+                  {item.customer.PostalCode}
+                </div>
               </div>
             </div>
-            <div className={styles.visitListDetailColumn}>
-              <div className={styles.visitListTitle}>{item.calendarItem.Title}</div>
-              <div className={styles.visitListContact}>
-                {item.customer.CompanyName}&nbsp;
-                ({item.customer.ContactName})
-              </div>
-              <div className={styles.visitListLocation}>
-                {item.customer.Address},
-                {item.customer.City},
-                {item.customer.Region}&nbsp;
-                {item.customer.Country}&nbsp;
-                {item.customer.PostalCode}
-              </div>
-            </div>
-          </div>
-        )) }
+          )) }
+        </div>
       </div>
     );
   }

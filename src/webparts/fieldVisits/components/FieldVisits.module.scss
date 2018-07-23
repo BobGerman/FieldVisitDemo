@@ -1,5 +1,25 @@
 @import '~@microsoft/sp-office-ui-fabric-core/dist/sass/SPFabricCore.scss';
 
+.userTabs {
+
+  margin: 0 0 5px 0;
+  padding: 0;
+
+  .userTab {
+    display: inline;
+    border: solid;
+    border-width: 1px 1px 0 1px;
+    padding: 5px 10px;
+    font-size: x-large;
+    margin: 0 5px 0 0;
+  }
+
+  .userTabSelected {
+    background-color: $ms-color-themeLight;
+  }
+
+}
+
 .visitList {
 
   border-top-style: solid;

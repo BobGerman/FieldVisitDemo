@@ -11,11 +11,11 @@ import * as strings from 'FieldVisitsWebPartStrings';
 import { IFieldVisitsProps, FieldVisits }
   from './components/FieldVisits';
 
-import { IVisit } from './model/IVisit';
 import ServiceFactory from './services/ServiceFactory';
 
 export interface IFieldVisitsWebPartProps {
-  description: string;
+  groupEmail: string;
+  groupId: string;
 }
 
 export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisitsWebPartProps> {
@@ -27,7 +27,8 @@ export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisi
     const element: React.ReactElement<IFieldVisitsProps > = React.createElement(
       FieldVisits,
       {
-        description: this.properties.description,
+        groupEmail: this.properties.groupEmail,
+        groupId: this.properties.groupId,
         visitService: visitService,
         currentUserEmail: this.context.pageContext.user.email
       }
@@ -51,8 +52,11 @@ export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisi
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
+                PropertyPaneTextField('groupEmail', {
+                  label: strings.GroupEmailLabel
+                }),
+                PropertyPaneTextField('groupId', {
+                  label: strings.GroupIdLabel
                 })
               ]
             }

@@ -1,7 +1,8 @@
 declare interface IFieldVisitsWebPartStrings {
   PropertyPaneDescription: string;
   BasicGroupName: string;
-  DescriptionFieldLabel: string;
+  GroupEmailLabel: string;
+  GroupIdLabel: string;
 }
 
 declare module 'FieldVisitsWebPartStrings' {

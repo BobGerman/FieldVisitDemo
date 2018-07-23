@@ -11,9 +11,10 @@ import { VisitList } from './VisitList';
 import { CompanyInfo } from './CompanyInfo';
 
 export interface IFieldVisitsProps {
-  description: string;
   visitService: IVisitService;
   currentUserEmail: string;
+  groupEmail: string;
+  groupId: string;
 }
 
 export interface IFieldVisitsState {

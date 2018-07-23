@@ -26,8 +26,9 @@ export class VisitList extends React.Component<IVisitListProps, {}> {
             <div className={styles.visitListDateColumn}>
               <div className={styles.visitListTime}>
                 {item.calendarItem.DateTime.getHours() % 12}:
-                  {item.calendarItem.DateTime.getMinutes()}&nbsp;
-                  {item.calendarItem.DateTime.getHours() < 12 ? 'am' : 'pm'}
+                {item.calendarItem.DateTime.getMinutes()<10 ? "0" : ""}
+                {item.calendarItem.DateTime.getMinutes()}&nbsp;
+                {item.calendarItem.DateTime.getHours() < 12 ? 'am' : 'pm'}
               </div>
               <div className={styles.visitListDate}>
                 {item.calendarItem.DateTime.toDateString()}

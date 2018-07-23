@@ -36,7 +36,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
       .then ((visits) => {
         this.setState ({
           visits: visits,
-          selectedVisit: visits[1],
+          selectedVisit: null,
           visitsFetched: true
         });
       });

@@ -7,7 +7,7 @@ export default class CalendarServiceMock implements ICalendarService {
     [
         {
             Title: "Lonseome Pine follow-up (LONEP)",
-            DateTime: new Date(),
+            DateTime: new Date(2018, 6, 30, 9, 30, 0),
             Location: "23 SE Hawthorne Blvd., Portland, OR",
             Coordinates: {
                 Latitude: 45.5122555, 
@@ -16,7 +16,7 @@ export default class CalendarServiceMock implements ICalendarService {
         },
         {
             Title: "Big Cheese annual inspection (THEBI)",
-            DateTime: new Date(),
+            DateTime: new Date(2018, 6, 30, 11, 0, 0),
             Location: "89 Jefferson Way, Portland, OR",
             Coordinates: {
                 Latitude: 45.5137863, 
@@ -25,7 +25,7 @@ export default class CalendarServiceMock implements ICalendarService {
         },
         {
             Title: "Lazu K Kountry Store (LAZYK)",
-            DateTime: new Date(),
+            DateTime: new Date(2018, 6, 30, 15, 30, 0),
             Location: "12 Orchestra Terrace, Walla Walla, WA",
             Coordinates: {
                 Latitude: 46.0671362,

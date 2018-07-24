@@ -1,5 +1,5 @@
 import { IVisit } from '../../model/IVisit';
 
 export interface IVisitService {
-    getMyVisits () : Promise<IVisit[]>;
+    getGroupVisits (groupId: string) : Promise<IVisit[]>;
 }

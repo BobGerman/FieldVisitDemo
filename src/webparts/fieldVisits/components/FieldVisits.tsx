@@ -19,7 +19,7 @@ export interface IFieldVisitsProps {
 
 export interface IFieldVisitsState {
   dataFetched?: boolean;
-  users?: IUser[]
+  users?: IUser[];
   allVisits?: IVisit[];
   filteredVisits?: IVisit[];
   selectedVisit?: IVisit;
@@ -41,7 +41,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
   public render(): React.ReactElement<IFieldVisitsProps> {
 
     if (!this.state.dataFetched) {
-      this.props.visitService.getMyVisits()
+      this.props.visitService.getGroupVisits(this.props.groupId)
       .then ((visits) => {
         var u = this.getUsersFromVisits(visits);
         var fv = this.filterVisitsBySelectedUsers(visits, u);
@@ -105,7 +105,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
         if (users.filter((u) => (u.isSelected && u.email == attendee.email)).length > 0) {
           showVisit = true;
         }
-      })
+      });
       if (showVisit) {
         result.push(visit);
       }
@@ -128,7 +128,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
                   isSelected: attendee.email == this.props.currentUserEmail
                 });
              }
-        })
+        });
       }
     });
 

@@ -31,7 +31,7 @@ export default class CalendarServiceMock implements ICalendarService {
         }
     ];
 
-    public getMyCalendarItems() {
+    public getGroupCalendarItems(groupId: string) {
         return new Promise<ICalendarItem[]>((resolve) => {
             resolve(this.mockItems);
         });

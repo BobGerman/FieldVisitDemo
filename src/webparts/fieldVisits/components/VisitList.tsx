@@ -15,15 +15,6 @@ export class VisitList extends React.Component<IVisitListProps, {}> {
 
   public render(): React.ReactElement<IVisitListProps> {
 
-    var users: IUser[] = null;
-    this.props.visits.forEach((item) => {
-      if (item.calendarItem.Attendees && item.calendarItem.Attendees.length > 0) {
-        item.calendarItem.Attendees.forEach((attendee) => {
-
-        })
-      }
-    });
-
     return (
       <div>
         <div className={styles.visitList}>

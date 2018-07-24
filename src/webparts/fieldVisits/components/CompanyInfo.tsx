@@ -17,11 +17,11 @@ export class CompanyInfo extends React.Component<ICompanyInfoProps, {}> {
             <div>
                 <div>{ this.props.visit.customer.CompanyName }</div>
                 <div>{ this.props.visit.customer.Address }</div>
-                <div>{ this.props.visit.customer.City }, 
-                     { this.props.visit.customer.Region }
+                <div>{ this.props.visit.customer.City },&nbsp; 
+                     { this.props.visit.customer.Region }&nbsp;
                      { this.props.visit.customer.PostalCode }</div>
                 <div>{ this.props.visit.customer.Phone }</div>
-                <div>{ this.props.visit.customer.ContactName }, 
+                <div>{ this.props.visit.customer.ContactName },&nbsp;
                      { this.props.visit.customer.ContactTitle }</div>
             </div>
         );

@@ -22,7 +22,9 @@ export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisi
 
   public render(): void {
 
-    const visitService = ServiceFactory.getVisitService(Environment.type);
+    const visitService = ServiceFactory.getVisitService(
+      Environment.type, this.context, this.context.serviceScope
+    );
 
     const element: React.ReactElement<IFieldVisitsProps > = React.createElement(
       FieldVisits,

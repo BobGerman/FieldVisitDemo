@@ -26,6 +26,7 @@ export default class VisitService implements IVisitService {
             this.calendarService.getGroupCalendarItems(groupId)
             .then((calendarItems) => {
                 var items: IVisit[] = new Array<IVisit>();
+                let outstandingPromises = 0;
     
                 calendarItems.forEach(element => {
         
@@ -36,6 +37,7 @@ export default class VisitService implements IVisitService {
                     {
                         // If here, we found a potential customer ID
                         let customerId = matches[1];
+                        outstandingPromises++;
                         this.customerService.getCustomer(customerId)
                         .then((customer) => {
                             if (customer) {
@@ -45,10 +47,14 @@ export default class VisitService implements IVisitService {
                                     customer: customer
                                 });
                             }
+                            if (!--outstandingPromises) {
+                                resolve(items.sort((i,j) =>
+                                    (i.calendarItem.DateTime.getTime() -
+                                     j.calendarItem.DateTime.getTime())));
+                            }
                         });
                     }
                 });
-                resolve(items);
             });
 
         });

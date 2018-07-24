@@ -7,11 +7,16 @@ import { ICalendarService } from './CalendarService/ICalendarService';
 import CalendarService from './CalendarService/CalendarService';
 import CalendarServiceMock from './CalendarService/CalendarServiceMock';
 
+import { IWebPartContext } from '@microsoft/sp-webpart-base';
+import { ServiceScope } from '@microsoft/sp-core-library';
 import { EnvironmentType } from '@microsoft/sp-core-library';
 
 export default class ServiceFactory {
 
-    public static getVisitService(environmentType: EnvironmentType) : IVisitService {
+    public static getVisitService(
+        environmentType: EnvironmentType,
+        context: IWebPartContext,
+        serviceScope: ServiceScope) : IVisitService {
 
         var calendarService: ICalendarService;
         var customerService: ICustomerService;
@@ -21,7 +26,7 @@ export default class ServiceFactory {
             customerService = new CustomerServiceMock();
         } else {
             calendarService = new CalendarService();
-            customerService = new CustomerService();
+            customerService = new CustomerService(context, serviceScope);
         }
 
         return new VisitService(calendarService, customerService);

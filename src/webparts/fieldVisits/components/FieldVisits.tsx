@@ -41,7 +41,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
   public render(): React.ReactElement<IFieldVisitsProps> {
 
     if (!this.state.dataFetched) {
-      this.props.visitService.getGroupVisits(this.props.groupId)
+      this.props.visitService.getGroupVisits(this.props.groupId, this.props.groupEmail)
       .then ((visits) => {
         var u = this.getUsersFromVisits(visits);
         var fv = this.filterVisitsBySelectedUsers(visits, u);

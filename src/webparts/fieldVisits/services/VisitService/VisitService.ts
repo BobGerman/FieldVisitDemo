@@ -19,11 +19,11 @@ export default class VisitService implements IVisitService {
         }
 
 
-    public getGroupVisits(groupId: string) {
+    public getGroupVisits(groupId: string, groupEmail: string) {
 
         return new Promise<IVisit[]>((resolve, reject) => {
 
-            this.calendarService.getGroupCalendarItems(groupId)
+            this.calendarService.getGroupCalendarItems(groupId, groupEmail)
             .then((calendarItems) => {
                 var items: IVisit[] = new Array<IVisit>();
                 let outstandingPromises = 0;

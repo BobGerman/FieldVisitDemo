@@ -25,7 +25,7 @@ export default class ServiceFactory {
             calendarService = new CalendarServiceMock();
             customerService = new CustomerServiceMock();
         } else {
-            calendarService = new CalendarService();
+            calendarService = new CalendarService(context, serviceScope);
             customerService = new CustomerService(context, serviceScope);
         }
 

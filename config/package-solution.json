@@ -5,7 +5,13 @@
     "id": "a1058da7-69ed-4d2a-888a-2c71e7eefc7b",
     "version": "1.0.0.0",
     "includeClientSideAssets": true,
-    "skipFeatureDeployment": true
+    "skipFeatureDeployment": true,
+    "webApiPermissionRequests": [
+      {
+        "resource": "Microsoft Graph",
+        "scope": "Group.Read.All"
+      }
+    ]
   },
   "paths": {
     "zippedPackage": "solution/field-visit-demo.sppkg"

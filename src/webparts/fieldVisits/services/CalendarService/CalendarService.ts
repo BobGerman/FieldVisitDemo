@@ -24,7 +24,11 @@ export default class CalendarService implements ICalendarService {
 
         var result = new Promise<ICalendarItem[]>((resolve, reject) => {
 
-            graphClient.api(`/groups/${groupId}/calendarview?startdatetime=2018-07-22T01:04:38.644Z&enddatetime=2018-07-31T01:04:38.644Z`)
+            const now = Date.now();
+            const startDateTime = this.formatDateForRest(new Date(now));
+            const endDateTime = this.formatDateForRest(new Date(now + 7*24*60*60*1000));
+
+            graphClient.api(`/groups/${groupId}/calendarview?startdatetime=${startDateTime}&enddatetime=${endDateTime}`)
             .get((error, data: CalendarView, rawResponse?: any) => {
 
                 let calendarItems :ICalendarItem[] = [];
@@ -57,5 +61,19 @@ export default class CalendarService implements ICalendarService {
         });
 
         return result;
+    }
+
+    // formatDateForRest() - The O365 REST API wants ISO format with the milliseconds not present,
+    // in UTC. This function will return the correctly formatted time for midnight, local time, on
+    // the date specified. Example of a correctly formatted time: 2015-09-06T00:00:00Z
+    private formatDateForRest(date) {
+
+        var midnightLocalTime = date;
+        midnightLocalTime.setHours(0, 0, 0, 0);
+        var utcDate = new Date(midnightLocalTime.getTime() + midnightLocalTime.getTimezoneOffset() * 60 * 1000);
+        return utcDate.getFullYear() + "-" +
+                ('0' + (utcDate.getMonth() + 1)).substr(-2) + "-" +
+                ('0' + utcDate.getDate()).substr(-2) + "T" +
+                ('0' + utcDate.getHours()).substr(-2) + ":00:00Z";
     }
 }

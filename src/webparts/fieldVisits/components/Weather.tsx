@@ -31,18 +31,32 @@ export class Weather extends React.Component<IWeatherProps, IWeatherState> {
             this.props.postalCode) {
 
             if (this.state.conditions) {
+                
+                const c = this.state.conditions;
+                const tempC = c.main.temp-273;
+                const tempF = Math.round(9/5*tempC+32);
+
                 return (
-                    <div>
+                <div className={styles.weather}>
+                  <div className={styles.weatherContainer}>
+                    <div className={styles.weatherrow}>
+                      <div className={styles.weathercolumn + ' ' + styles.weatherTemp}>
+                        {tempF}&deg; F
+                      </div>
+                      <div className={styles.weathercolumn}>
                         <img src='http://openweathermap.org/img/w/10d.png' />
-                        Weather for {this.props.postalCode} goes here!
+                         Weather for {this.props.postalCode} goes here!
+                      </div>
+                    </div>
+                  </div>
                 </div>);
             } else {
                 this.props.service.getConditions(this.props.postalCode)
-                .then((conditions: IWeatherConditions) => {
-                    this.setState({
-                        conditions: conditions
+                    .then((conditions: IWeatherConditions) => {
+                        this.setState({
+                            conditions: conditions
+                        });
                     });
-                });
 
                 return (<div>Loading</div>);
             }

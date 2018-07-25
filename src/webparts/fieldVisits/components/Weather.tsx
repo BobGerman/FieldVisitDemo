@@ -2,30 +2,54 @@ import * as React from 'react';
 import { escape, isEmpty } from '@microsoft/sp-lodash-subset';
 import styles from './FieldVisits.module.scss';
 
-import { IWeatherConditions } from '../model/IWeatherConditions';
+import { IWeatherService } from '../services/WeatherService/IWeatherService';
+import { IWeatherConditions, IWeather } from '../model/IWeatherConditions';
 
 export interface IWeatherProps {
-  country: string;
-  postalCode: string;
+    service: IWeatherService;
+    country: string;
+    postalCode: string;
 }
 
-export class Weather extends React.Component<IWeatherProps, {}> {
+export interface IWeatherState {
+    conditions: IWeatherConditions;
+}
 
-  public render(): React.ReactElement<IWeatherProps> {
+export class Weather extends React.Component<IWeatherProps, IWeatherState> {
 
-    if (this.props.country &&
-        this.props.country.toLowerCase() == "usa" &&
-        this.props.postalCode) {
-        return (
-            <div>
-                Weather for {this.props.postalCode} goes here!
-            </div>
-        );
-    } else {
-        return (
-            <div>No visit selected</div>
-        );
+    constructor() {
+        super();
+        this.state = {
+            conditions: null
+        };
     }
 
-  }
+    public render(): React.ReactElement<IWeatherProps> {
+
+        if (this.props.country &&
+            this.props.country.toLowerCase() == "usa" &&
+            this.props.postalCode) {
+
+            if (this.state.conditions) {
+                return (
+                    <div>
+                        <img src='http://openweathermap.org/img/w/10d.png' />
+                        Weather for {this.props.postalCode} goes here!
+                </div>);
+            } else {
+                this.props.service.getConditions(this.props.postalCode)
+                .then((conditions: IWeatherConditions) => {
+                    this.setState({
+                        conditions: conditions
+                    });
+                });
+
+                return (<div>Loading</div>);
+            }
+        } else {
+            return (
+                <div>No visit selected</div>
+            );
+        }
+    }
 }

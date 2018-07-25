@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
-import { Version, Environment } from '@microsoft/sp-core-library';
+import { Version, Environment, EnvironmentType } from '@microsoft/sp-core-library';
 import {
   BaseClientSideWebPart,
   IPropertyPaneConfiguration,
@@ -25,6 +25,9 @@ export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisi
     const visitService = ServiceFactory.getVisitService(
       Environment.type, this.context, this.context.serviceScope
     );
+    const weatherService = ServiceFactory.getWeatherService(
+      Environment.type, this.context, this.context.serviceScope
+    );
 
     const element: React.ReactElement<IFieldVisitsProps > = React.createElement(
       FieldVisits,
@@ -32,6 +35,7 @@ export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisi
         groupEmail: this.properties.groupEmail,
         groupId: this.properties.groupId,
         visitService: visitService,
+        weatherService: weatherService,
         currentUserEmail: this.context.pageContext.user.email
       }
     );

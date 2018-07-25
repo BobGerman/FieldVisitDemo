@@ -2,6 +2,7 @@ import * as React from 'react';
 import styles from './FieldVisits.module.scss';
 import { escape } from '@microsoft/sp-lodash-subset';
 import { IVisitService } from '../services/VisitService/IVisitService';
+import { IWeatherService } from '../services/WeatherService/IWeatherService';
 
 import { IVisit } from '../model/IVisit';
 import { IUser } from '../model/IUser';
@@ -13,6 +14,7 @@ import { Weather } from './Weather';
 
 export interface IFieldVisitsProps {
   visitService: IVisitService;
+  weatherService: IWeatherService;
   currentUserEmail: string;
   groupEmail: string;
   groupId: string;
@@ -74,7 +76,9 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
                   visitSelectionChanged={this.handleVisitSelectionChanged.bind(this)}
         />
         <CompanyInfo visit={this.state.selectedVisit} />
-        <Weather country={country} postalCode={postalCode} />
+        <Weather service={this.props.weatherService}
+                 country={country}
+                 postalCode={postalCode} />
       </div>
     );
   }

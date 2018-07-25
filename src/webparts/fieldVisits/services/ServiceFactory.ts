@@ -1,11 +1,14 @@
 import { IVisitService } from './VisitService/IVisitService';
 import VisitService from './VisitService/VisitService';
 import { ICustomerService } from './CustomerService/ICustomerService';
-import  CustomerService  from './CustomerService/CustomerService';
-import  CustomerServiceMock  from './CustomerService/CustomerServiceMock';
+import CustomerService from './CustomerService/CustomerService';
+import CustomerServiceMock from './CustomerService/CustomerServiceMock';
 import { ICalendarService } from './CalendarService/ICalendarService';
 import CalendarService from './CalendarService/CalendarService';
 import CalendarServiceMock from './CalendarService/CalendarServiceMock';
+import { IWeatherService } from './WeatherService/IWeatherService';
+import WeatherService from './WeatherService/WeatherService';
+import WeatherServiceMock from './WeatherService/WeatherServiceMock';
 
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import { ServiceScope } from '@microsoft/sp-core-library';
@@ -16,7 +19,7 @@ export default class ServiceFactory {
     public static getVisitService(
         environmentType: EnvironmentType,
         context: IWebPartContext,
-        serviceScope: ServiceScope) : IVisitService {
+        serviceScope: ServiceScope): IVisitService {
 
         var calendarService: ICalendarService;
         var customerService: ICustomerService;
@@ -30,6 +33,19 @@ export default class ServiceFactory {
         }
 
         return new VisitService(calendarService, customerService);
+    }
 
+    public static getWeatherService(
+        environmentType: EnvironmentType,
+        context: IWebPartContext,
+        serviceScope: ServiceScope): IWeatherService {
+
+        {
+
+            return (environmentType === EnvironmentType.Local) ?
+                new WeatherServiceMock() :
+                new WeatherServiceMock();
+
+        }
     }
 }

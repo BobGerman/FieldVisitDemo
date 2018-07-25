@@ -9,6 +9,7 @@ import { IUser } from '../model/IUser';
 import { UserTabs } from './UserTabs';
 import { VisitList } from './VisitList';
 import { CompanyInfo } from './CompanyInfo';
+import { Weather } from './Weather';
 
 export interface IFieldVisitsProps {
   visitService: IVisitService;
@@ -55,6 +56,13 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
       });
     }
 
+    let country: string = null;
+    let postalCode: string = null;
+    if (this.state.selectedVisit && this.state.selectedVisit.customer) {
+      country = this.state.selectedVisit.customer.Country;
+      postalCode = this.state.selectedVisit.customer.PostalCode;
+    }
+
     return (
 
       <div>
@@ -66,6 +74,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
                   visitSelectionChanged={this.handleVisitSelectionChanged.bind(this)}
         />
         <CompanyInfo visit={this.state.selectedVisit} />
+        <Weather country={country} postalCode={postalCode} />
       </div>
     );
   }

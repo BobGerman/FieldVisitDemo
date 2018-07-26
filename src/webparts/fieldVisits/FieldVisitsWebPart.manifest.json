@@ -3,6 +3,7 @@
   "id": "77bf7273-7b8a-4c72-b0c8-a80863b7a4b9",
   "alias": "FieldVisitsWebPart",
   "componentType": "WebPart",
+  "supportsFullBleed": true,
 
   // The "*" signifies that the version should be taken from the package.json
   "version": "*",

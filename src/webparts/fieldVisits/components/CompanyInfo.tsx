@@ -29,7 +29,7 @@ export class CompanyInfo extends React.Component<ICompanyInfoProps, {}> {
         );
     } else {
         return (
-            <div>No visit selected</div>
+            <div></div>
         );
     }
 

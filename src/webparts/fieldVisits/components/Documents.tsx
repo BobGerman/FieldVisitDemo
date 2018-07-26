@@ -84,7 +84,7 @@ export class Documents extends React.Component<IDocumentProps, IDocumentState> {
             }
         } else {
             return (
-                <div>No visit selected</div>
+                <div></div>
             );
         }
     }

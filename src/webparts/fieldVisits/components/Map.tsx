@@ -74,7 +74,7 @@ export class Map extends React.Component<IMapProps, IMapState> {
             }
         } else {
             return (
-                <div>No visit selected</div>
+                <div></div>
             );
         }
     }

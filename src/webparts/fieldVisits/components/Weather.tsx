@@ -66,7 +66,7 @@ export class Weather extends React.Component<IWeatherProps, IWeatherState> {
             }
         } else {
             return (
-                <div>No visit selected</div>
+                <div></div>
             );
         }
     }

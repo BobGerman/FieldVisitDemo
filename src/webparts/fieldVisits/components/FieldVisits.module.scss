@@ -218,14 +218,14 @@
   
   .documentsNameColumn {
     @include ms-Grid-col;
-    @include ms-sm4;
-    @include ms-md3;
-    @include ms-lg2;
+    @include ms-sm8;
+    @include ms-md6;
+    @include ms-lg5;
   };
 
   .documentsAuthorColumn {
     @include ms-Grid-col;
-    @include ms-sm4;
+    @include ms-sm1;
     @include ms-md3;
     @include ms-lg2;
   };
@@ -233,8 +233,8 @@
   .documentsDateColumn {
     @include ms-Grid-col;
     @include ms-sm4;
-    @include ms-md6;
-    @include ms-lg8;
+    @include ms-md3;
+    @include ms-lg5;
   };
 
 }

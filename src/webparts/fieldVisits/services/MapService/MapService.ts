@@ -21,7 +21,7 @@ export default class MapService implements IMapService {
 
         var result = new Promise<IMapLocation>((resolve, reject) => {
             this.context.httpClient
-                .fetch(`http://dev.virtualearth.net/REST/v1/Locations/US/${state}/${zip}/${city}/${address}?key=${this.mapApiKey}`,
+                .fetch(`https://dev.virtualearth.net/REST/v1/Locations/US/${state}/${zip}/${city}/${address}?key=${this.mapApiKey}`,
                     HttpClient.configurations.v1,
                     {
                         method: 'GET',

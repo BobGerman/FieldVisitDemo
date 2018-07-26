@@ -3,6 +3,7 @@ import styles from './FieldVisits.module.scss';
 import { escape } from '@microsoft/sp-lodash-subset';
 import { IVisitService } from '../services/VisitService/IVisitService';
 import { IWeatherService } from '../services/WeatherService/IWeatherService';
+import { IMapService } from '../services/MapService/IMapService';
 
 import { IVisit } from '../model/IVisit';
 import { IUser } from '../model/IUser';
@@ -11,10 +12,12 @@ import { UserTabs } from './UserTabs';
 import { VisitList } from './VisitList';
 import { CompanyInfo } from './CompanyInfo';
 import { Weather } from './Weather';
+import { Map } from './Map';
 
 export interface IFieldVisitsProps {
   visitService: IVisitService;
   weatherService: IWeatherService;
+  mapService: IMapService;
   currentUserEmail: string;
   groupEmail: string;
   groupId: string;
@@ -58,9 +61,15 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
       });
     }
 
+    let address: string = null;
+    let city: string = null;
+    let state: string = null;
     let country: string = null;
     let postalCode: string = null;
     if (this.state.selectedVisit && this.state.selectedVisit.customer) {
+      address = this.state.selectedVisit.customer.Address;
+      city = this.state.selectedVisit.customer.City;
+      state = this.state.selectedVisit.customer.Region;
       country = this.state.selectedVisit.customer.Country;
       postalCode = this.state.selectedVisit.customer.PostalCode;
     }
@@ -77,8 +86,10 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
         />
         <CompanyInfo visit={this.state.selectedVisit} />
         <Weather service={this.props.weatherService}
-                 country={country}
-                 postalCode={postalCode} />
+                 country={country} postalCode={postalCode} />
+        <Map service={this.props.mapService}
+             address={address} city={city} state={state}
+             country={country} postalCode={postalCode} />
       </div>
     );
   }

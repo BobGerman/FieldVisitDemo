@@ -17,6 +17,7 @@ export interface IFieldVisitsWebPartProps {
   groupEmail: string;
   groupId: string;
   owmApiKey: string;
+  mapApiKey: string;
 }
 
 export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisitsWebPartProps> {
@@ -30,6 +31,10 @@ export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisi
       Environment.type, this.context, this.context.serviceScope,
       this.properties.owmApiKey
     );
+    const mapService = ServiceFactory.getMapService(
+      Environment.type, this.context, this.context.serviceScope,
+      this.properties.mapApiKey
+    );
 
     const element: React.ReactElement<IFieldVisitsProps > = React.createElement(
       FieldVisits,
@@ -38,6 +43,7 @@ export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisi
         groupId: this.properties.groupId,
         visitService: visitService,
         weatherService: weatherService,
+        mapService: mapService,
         currentUserEmail: this.context.pageContext.user.email
       }
     );
@@ -68,6 +74,9 @@ export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisi
                 }),
                 PropertyPaneTextField('owmApiKey', {
                   label: strings.OpenWeatherMapsApiKeyLabel
+                }),
+                PropertyPaneTextField('mapApiKey', {
+                  label: strings.MapApiKeyLabel
                 })
               ]
             }

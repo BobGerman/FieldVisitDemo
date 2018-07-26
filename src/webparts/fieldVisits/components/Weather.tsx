@@ -40,6 +40,7 @@ export class Weather extends React.Component<IWeatherProps, IWeatherState> {
                 <div className={styles.weather}>
                   <div className={styles.weatherContainer}>
                     <div className={styles.weatherrow}>
+                      Weather conditions in {c.name}<hr />
                       <div className={styles.weathercolumn1 + ' ' + styles.weatherTemp}>
                         {tempF}&deg; F<br />
                         <img src={`http://openweathermap.org/img/w/${c.weather[0].icon}.png`} />

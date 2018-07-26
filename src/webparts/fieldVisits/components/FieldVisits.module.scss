@@ -164,12 +164,20 @@
     padding: 20px;
   }
 
-  .weathercolumn {
+  .weathercolumn1 {
     @include ms-Grid-col;
-    @include ms-lg10;
-    @include ms-xl8;
-    @include ms-xlPush2;
-    @include ms-lgPush1;
+    @include ms-xl2;
+    @include ms-lg3;
+    @include ms-md5;
+    @include ms-sm12;
+  }
+
+  .weathercolumn2 {
+    @include ms-Grid-col;
+    @include ms-xl10;
+    @include ms-lg9;
+    @include ms-md7;
+    @include ms-sm12;
   }
 
   .weatherTemp {

@@ -40,12 +40,15 @@ export class Weather extends React.Component<IWeatherProps, IWeatherState> {
                 <div className={styles.weather}>
                   <div className={styles.weatherContainer}>
                     <div className={styles.weatherrow}>
-                      <div className={styles.weathercolumn + ' ' + styles.weatherTemp}>
-                        {tempF}&deg; F
+                      <div className={styles.weathercolumn1 + ' ' + styles.weatherTemp}>
+                        {tempF}&deg; F<br />
+                        <img src={`http://openweathermap.org/img/w/${c.weather[0].icon}.png`} />
                       </div>
-                      <div className={styles.weathercolumn}>
-                        <img src='http://openweathermap.org/img/w/10d.png' />
-                         Weather for {this.props.postalCode} goes here!
+                      <div className={styles.weathercolumn2}>
+                         {`${c.weather[0].main}`}<br />
+                         {`Barometric pressure ${c.main.pressure}`}<br />
+                         {`Humidity ${c.main.humidity}%`}<br />
+                         {`Wind at ${c.wind.speed} MPH`}<br />
                       </div>
                     </div>
                   </div>

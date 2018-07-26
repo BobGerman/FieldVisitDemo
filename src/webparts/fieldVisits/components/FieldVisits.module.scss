@@ -201,10 +201,15 @@
 
   .documentsRow {
     @include ms-Grid-row;
-    border-color: black;
-    border-top-style: hidden;
+    border-color: $ms-color-neutralLight;
     border-bottom-style: solid;
     border-width: 1px;
+  }
+
+  .documentsHeadingRow {
+    @include ms-Grid-row;
+    color: $ms-color-white;
+    background-color: $ms-color-themeDark;
   }
 
   .documentsRow:hover {
@@ -228,8 +233,8 @@
   .documentsDateColumn {
     @include ms-Grid-col;
     @include ms-sm4;
-    @include ms-md3;
-    @include ms-lg2;
+    @include ms-md6;
+    @include ms-lg8;
   };
 
 }

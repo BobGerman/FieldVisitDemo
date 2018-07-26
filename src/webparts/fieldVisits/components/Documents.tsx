@@ -33,17 +33,33 @@ export class Documents extends React.Component<IDocumentProps, IDocumentState> {
                 
                 return (
                 <div className={styles.documents}>
-                    {this.state.documents.map(doc => (
 
+                    <div className={styles.documentsHeadingRow}>
+                        <div className={styles.documentsNameColumn}>
+                            Document
+                        </div>
+                        <div className={styles.documentsAuthorColumn}>
+                            Author
+                        </div>
+                        <div className={styles.documentsDateColumn}>
+                            Date
+                        </div>
+                    </div>
+
+                    {this.state.documents.map(doc => (
                     <div className={styles.documentsRow}>
                         <div className={styles.documentsNameColumn}>
-                            {doc.name}
+                            <a href={doc.url}>{doc.name}</a>
                         </div>
                         <div className={styles.documentsAuthorColumn}>
                             {doc.author}
                         </div>
                         <div className={styles.documentsDateColumn}>
-                            {doc.date.getDate}
+                            {doc.date.toDateString()}&nbsp;
+                            {doc.date.getHours() % 12}:
+                            {doc.date.getMinutes()<10 ? "0" : ""}
+                            {doc.date.getMinutes()}&nbsp;
+                            {doc.date.getHours() < 12 ? 'am' : 'pm'}
                         </div>
                     </div>
 

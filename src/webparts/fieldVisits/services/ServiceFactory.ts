@@ -15,6 +15,8 @@ import MapServiceMock from './MapService/MapServiceMock';
 import { IDocumentService } from './DocumentService/IDocumentService';
 import DocumentService from './DocumentService/DocumentService';
 import DocumentServiceMock from './DocumentService/DocumentServiceMock';
+import { IActivityService } from './ActivityService/IActivityService';
+import ActivityServiceMock from './ActivityService/ActivityServiceMock';
 
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import { ServiceScope } from '@microsoft/sp-core-library';
@@ -71,5 +73,15 @@ export default class ServiceFactory {
         return (environmentType === EnvironmentType.Local) ?
             new DocumentServiceMock() :
             new DocumentService(context, serviceScope);
+    }
+
+    public static getActivityService(
+        environmentType: EnvironmentType,
+        context: IWebPartContext,
+        serviceScope: ServiceScope): IActivityService {
+
+        return (environmentType === EnvironmentType.Local) ?
+            new ActivityServiceMock() :
+            new ActivityServiceMock();
     }
 }

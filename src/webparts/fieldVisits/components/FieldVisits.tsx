@@ -5,6 +5,7 @@ import { IVisitService } from '../services/VisitService/IVisitService';
 import { IWeatherService } from '../services/WeatherService/IWeatherService';
 import { IMapService } from '../services/MapService/IMapService';
 import { IDocumentService } from '../services/DocumentService/IDocumentService';
+import { IActivityService } from '../services/ActivityService/IActivityService';
 
 import { IVisit } from '../model/IVisit';
 import { IUser } from '../model/IUser';
@@ -15,12 +16,14 @@ import { CompanyInfo } from './CompanyInfo';
 import { Weather } from './Weather';
 import { Map } from './Map';
 import { Documents } from './Documents';
+import { Activities } from './Activities';
 
 export interface IFieldVisitsProps {
   visitService: IVisitService;
   weatherService: IWeatherService;
   mapService: IMapService;
   documentService: IDocumentService;
+  activityService: IActivityService;
   currentUserEmail: string;
   groupEmail: string;
   groupId: string;
@@ -90,6 +93,8 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
                   visitSelectionChanged={this.handleVisitSelectionChanged.bind(this)}
         />
         <CompanyInfo visit={this.state.selectedVisit} />
+        <Activities service={this.props.activityService}
+                    customerId={customerId} />
         <Documents service={this.props.documentService}
                    customerId={customerId} />
         <Weather service={this.props.weatherService}
@@ -97,6 +102,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
         <Map service={this.props.mapService}
              address={address} city={city} state={state}
              country={country} postalCode={postalCode} />
+        
       </div>
     );
   }

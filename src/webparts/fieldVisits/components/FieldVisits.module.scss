@@ -238,3 +238,55 @@
   };
 
 }
+
+.activities {
+
+  border-top-style: solid;
+  border-width: 1px;
+
+  .activitiesRow {
+    @include ms-Grid-row;
+    border-color: $ms-color-neutralLight;
+    border-bottom-style: solid;
+    border-width: 1px;
+  }
+
+  .activitiesHeadingRow {
+    @include ms-Grid-row;
+    color: $ms-color-white;
+    background-color: $ms-color-themeDark;
+  }
+
+  .activitiesRow:hover {
+    background-color: $ms-color-neutralLight
+  }
+  
+  .activitiesDateColumn {
+    @include ms-Grid-col;
+    @include ms-sm4;
+    @include ms-md3;
+    @include ms-lg2;
+  };
+
+  .activitiesNameColumn {
+    @include ms-Grid-col;
+    @include ms-sm4;
+    @include ms-md3;
+    @include ms-lg3;
+  };
+
+  .activitiesAmountColumn {
+    @include ms-Grid-col;
+    @include ms-sm4;
+    @include ms-md3;
+    @include ms-lg2;
+  };
+
+  .activitiesDescriptionColumn {
+    @include ms-Grid-col;
+    @include ms-sm12;
+    @include ms-md3;
+    @include ms-lg5;
+  };
+
+}

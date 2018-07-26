@@ -40,7 +40,7 @@ export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisi
     );
     const activityService = ServiceFactory.getActivityService(
       Environment.type, this.context, this.context.serviceScope,
-    )
+    );
 
     const element: React.ReactElement<IFieldVisitsProps > = React.createElement(
       FieldVisits,

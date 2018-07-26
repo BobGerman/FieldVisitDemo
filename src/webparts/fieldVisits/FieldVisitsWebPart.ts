@@ -16,6 +16,7 @@ import ServiceFactory from './services/ServiceFactory';
 export interface IFieldVisitsWebPartProps {
   groupEmail: string;
   groupId: string;
+  owmApiKey: string;
 }
 
 export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisitsWebPartProps> {
@@ -26,7 +27,8 @@ export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisi
       Environment.type, this.context, this.context.serviceScope
     );
     const weatherService = ServiceFactory.getWeatherService(
-      Environment.type, this.context, this.context.serviceScope
+      Environment.type, this.context, this.context.serviceScope,
+      this.properties.owmApiKey
     );
 
     const element: React.ReactElement<IFieldVisitsProps > = React.createElement(
@@ -63,6 +65,9 @@ export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisi
                 }),
                 PropertyPaneTextField('groupId', {
                   label: strings.GroupIdLabel
+                }),
+                PropertyPaneTextField('owmApiKey', {
+                  label: strings.OpenWeatherMapsApiKeyLabel
                 })
               ]
             }

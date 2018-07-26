@@ -38,14 +38,14 @@ export default class ServiceFactory {
     public static getWeatherService(
         environmentType: EnvironmentType,
         context: IWebPartContext,
-        serviceScope: ServiceScope): IWeatherService {
+        serviceScope: ServiceScope,
+        owmApiKey: string): IWeatherService {
 
         {
 
             return (environmentType === EnvironmentType.Local) ?
                 new WeatherServiceMock() :
-                new WeatherServiceMock();
-
+                new WeatherService(context, serviceScope, owmApiKey);
         }
     }
 }

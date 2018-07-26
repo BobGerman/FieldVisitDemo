@@ -3,6 +3,7 @@ declare interface IFieldVisitsWebPartStrings {
   BasicGroupName: string;
   GroupEmailLabel: string;
   GroupIdLabel: string;
+  OpenWeatherMapsApiKeyLabel: string;
 }
 
 declare module 'FieldVisitsWebPartStrings' {

@@ -3,6 +3,7 @@ define([], function() {
     "PropertyPaneDescription": "Description",
     "BasicGroupName": "Group Name",
     "GroupEmailLabel": "Group Email",
-    "GroupIdLabel": "Group ID"
+    "GroupIdLabel": "Group ID",
+    "OpenWeatherMapsApiKeyLabel": "Open Weather Maps API key"
   }
 });

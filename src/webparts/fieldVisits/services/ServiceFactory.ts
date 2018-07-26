@@ -9,6 +9,9 @@ import CalendarServiceMock from './CalendarService/CalendarServiceMock';
 import { IWeatherService } from './WeatherService/IWeatherService';
 import WeatherService from './WeatherService/WeatherService';
 import WeatherServiceMock from './WeatherService/WeatherServiceMock';
+import { IMapService } from './MapService/IMapService';
+import MapService from './MapService/MapService';
+import MapServiceMock from './MapService/MapServiceMock';
 
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import { ServiceScope } from '@microsoft/sp-core-library';
@@ -41,11 +44,19 @@ export default class ServiceFactory {
         serviceScope: ServiceScope,
         owmApiKey: string): IWeatherService {
 
-        {
-
             return (environmentType === EnvironmentType.Local) ?
                 new WeatherServiceMock() :
                 new WeatherService(context, serviceScope, owmApiKey);
-        }
+    }
+
+    public static getMapService(
+        environmentType: EnvironmentType,
+        context: IWebPartContext,
+        serviceScope: ServiceScope,
+        mapApiKey: string): IMapService {
+
+        return (environmentType === EnvironmentType.Local) ?
+            new MapServiceMock(mapApiKey) :
+            new MapService(context, serviceScope, mapApiKey);
     }
 }

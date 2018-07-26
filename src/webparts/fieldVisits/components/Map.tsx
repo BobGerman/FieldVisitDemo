@@ -50,13 +50,10 @@ export class Map extends React.Component<IMapProps, IMapState> {
                 const longitude = coordinates[1];
 
                 return (
-                <div className={styles.weather}>
-                  <div className={styles.weatherContainer}>
-                    <div className={styles.weatherrow}>
-                        <img src={`https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/${latitude},${longitude}/16?mapSize=600,300&pp=${latitude},${longitude}&key=${mapApiKey}`} />
-                        <br />{`Map at ${latitude}, ${longitude}`}
-                    </div>
-                  </div>
+                <div className={styles.map}>
+                    <img className={styles.mapImage}
+                     src={`https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/${latitude},${longitude}/16?mapSize=800,450&pp=${latitude},${longitude}&key=${mapApiKey}`} />
+                    <br />{`Map at ${latitude}, ${longitude}`}
                 </div>);
             } else {
                 // If here we have no location, or an old one. Get a new one.

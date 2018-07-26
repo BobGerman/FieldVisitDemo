@@ -290,3 +290,41 @@
   };
 
 }
+
+.postToChannel {
+
+  margin: 5px;
+
+  .postToChannelRow {
+    @include ms-Grid-row;
+    border-color: $ms-color-neutralLight;
+    border-bottom-style: solid;
+    border-width: 1px;
+  }
+
+  .postToChannelTextColumn {
+      @include ms-Grid-col;
+      @include ms-sm9;
+      @include ms-md9;
+      @include ms-lg9;
+  }
+
+  .postToChannelButtonColumn {
+    @include ms-Grid-col;
+    @include ms-sm3;
+    @include ms-md3;
+    @include ms-lg3;
+  }
+
+  .postToChannelTextArea {
+    width:100%;
+    padding: 2px;
+    height: 60px;
+  }
+
+  .postToChannelButton {
+    width: 100px;
+    padding: 2px;
+    height: 60px;
+  }
+}

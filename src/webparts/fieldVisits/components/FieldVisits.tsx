@@ -17,6 +17,7 @@ import { Weather } from './Weather';
 import { Map } from './Map';
 import { Documents } from './Documents';
 import { Activities } from './Activities';
+import { PostToChannel } from './PostToChannel';
 
 export interface IFieldVisitsProps {
   visitService: IVisitService;
@@ -73,6 +74,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
     let country: string = null;
     let postalCode: string = null;
     let customerId:string = null;
+    let customerName:string = null;
     if (this.state.selectedVisit && this.state.selectedVisit.customer) {
       address = this.state.selectedVisit.customer.Address;
       city = this.state.selectedVisit.customer.City;
@@ -80,6 +82,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
       country = this.state.selectedVisit.customer.Country;
       postalCode = this.state.selectedVisit.customer.PostalCode;
       customerId = this.state.selectedVisit.customer.CustomerID;
+      customerName = this.state.selectedVisit.customer.CompanyName;
     }
 
     return (
@@ -92,6 +95,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
                   selectedVisit={this.state.selectedVisit}
                   visitSelectionChanged={this.handleVisitSelectionChanged.bind(this)}
         />
+        <PostToChannel customerId={customerId} customerName={customerName} />
         <CompanyInfo visit={this.state.selectedVisit} />
         <Activities service={this.props.activityService}
                     customerId={customerId} />

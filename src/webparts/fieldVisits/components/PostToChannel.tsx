@@ -17,7 +17,7 @@ export class PostToChannel extends React.Component<IPostToChannelProps, {}> {
             return (
                 <div className={styles.postToChannel}>
                     <div className={styles.postToChannelRow}>
-                      <div className={styles.postToChannelButtonColumn}>
+                      <div className={styles.postToChannelTextColumn}>
                         <textarea className={styles.postToChannelTextArea}
                             value={`Post in the channel about ${this.props.customerName}`}
                         />

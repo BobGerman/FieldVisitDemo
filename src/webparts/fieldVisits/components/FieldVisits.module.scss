@@ -1,5 +1,25 @@
 @import '~@microsoft/sp-office-ui-fabric-core/dist/sass/SPFabricCore.scss';
 
+.fieldVisits {
+
+  .fieldVisitsRow {
+    @include ms-Grid-row;
+  }
+
+  .fieldVisitsLeftColumn {
+    @include ms-Grid-col;
+    @include ms-lg8;
+    padding: 10px;
+  }
+
+  .fieldVisitsRightColumn {
+    @include ms-Grid-col;
+    @include ms-lg4;
+    padding: 10px;
+  }
+
+}
+
 .userTabs {
 
   margin: 0 0 5px 0;
@@ -77,25 +97,6 @@
   }
 }
 
-.fieldVisits {
-
-  .fieldVisitsRow {
-    @include ms-Grid-row;
-    padding: 5px;
-  }
-
-  .fieldVisitsLeftColumn {
-    @include ms-Grid-col;
-    @include ms-lg8;
-  }
-
-  .fieldVisitsRightColumn {
-    @include ms-Grid-col;
-    @include ms-lg4;
-  }
-
-}
-
 .weather {
   .weatherContainer {
     max-width: 700px;
@@ -129,7 +130,6 @@
     @include ms-font-xxl;
     @include ms-fontColor-white;
   }
-
 }
 
 .map {
@@ -143,6 +143,7 @@
 
   border-top-style: solid;
   border-width: 1px;
+  padding: 10px;
 
   .documentsRow {
     @include ms-Grid-row;
@@ -155,6 +156,7 @@
     @include ms-Grid-row;
     color: $ms-color-white;
     background-color: $ms-color-themeDark;
+    padding: 5px;
   }
 
   .documentsRow:hover {
@@ -188,6 +190,7 @@
 
   border-top-style: solid;
   border-width: 1px;
+  padding: 10px;
 
   .activitiesRow {
     @include ms-Grid-row;
@@ -200,6 +203,7 @@
     @include ms-Grid-row;
     color: $ms-color-white;
     background-color: $ms-color-themeDark;
+    padding: 5px;
   }
 
   .activitiesRow:hover {
@@ -239,12 +243,14 @@
 .postToChannel {
 
   margin: 5px;
+  @include ms-Grid;
 
   .postToChannelRow {
     @include ms-Grid-row;
     border-color: $ms-color-neutralLight;
+    border-top-style: solid;
     border-bottom-style: solid;
-    border-width: 1px;
+    border-width: 2px;
   }
 
   .postToChannelTextColumn {
@@ -262,13 +268,13 @@
   }
 
   .postToChannelTextArea {
-    width:100%;
+    width: 100%;
     padding: 2px;
     height: 60px;
   }
 
   .postToChannelButton {
-    width: 100px;
+    width: 50px;
     padding: 2px;
     height: 60px;
   }

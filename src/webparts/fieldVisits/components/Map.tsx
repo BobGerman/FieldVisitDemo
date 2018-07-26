@@ -52,7 +52,7 @@ export class Map extends React.Component<IMapProps, IMapState> {
                 return (
                 <div className={styles.map}>
                     <img className={styles.mapImage}
-                     src={`https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/${latitude},${longitude}/16?mapSize=800,450&pp=${latitude},${longitude}&key=${mapApiKey}`} />
+                     src={`https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/${latitude},${longitude}/16?mapSize=450,600&pp=${latitude},${longitude}&key=${mapApiKey}`} />
                     <br />{`Map at ${latitude}, ${longitude}`}
                 </div>);
             } else {

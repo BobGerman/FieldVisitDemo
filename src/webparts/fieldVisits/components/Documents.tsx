@@ -50,7 +50,7 @@ export class Documents extends React.Component<IDocumentProps, IDocumentState> {
                             {this.state.documents.map(doc => (
                             <div className={styles.documentsRow}>
                                 <div className={styles.documentsNameColumn}>
-                                    <a href={doc.url}>{doc.name}</a>
+                                    <a href={`${doc.url}?web=1`} target='blank'>{doc.name}</a>
                                 </div>
                                 <div className={styles.documentsAuthorColumn}>
                                     {doc.author}

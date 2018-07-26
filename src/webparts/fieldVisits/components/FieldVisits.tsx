@@ -87,26 +87,37 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
 
     return (
 
-      <div>
-        <UserTabs users={this.state.users} 
-                  userSelectionChanged={this.handleUserSelectionChanged.bind(this)}
-        />
-        <VisitList visits={this.state.filteredVisits}
-                  selectedVisit={this.state.selectedVisit}
-                  visitSelectionChanged={this.handleVisitSelectionChanged.bind(this)}
-        />
-        <PostToChannel customerId={customerId} customerName={customerName} />
-        <CompanyInfo visit={this.state.selectedVisit} />
-        <Activities service={this.props.activityService}
+      <div className={styles.fieldVisits}>
+        <div className={styles.fieldVisitsRow}>
+          <div className={styles.fieldVisitsLeftColumn}>
+            <UserTabs users={this.state.users} 
+                    userSelectionChanged={this.handleUserSelectionChanged.bind(this)}
+            />
+            <VisitList visits={this.state.filteredVisits}
+                      selectedVisit={this.state.selectedVisit}
+                      visitSelectionChanged={this.handleVisitSelectionChanged.bind(this)}
+            />
+          </div>
+          <div className={styles.fieldVisitsRightColumn}>
+            <Weather service={this.props.weatherService}
+                  country={country} postalCode={postalCode} />
+            <CompanyInfo visit={this.state.selectedVisit} />
+          </div>
+        </div>
+        <div className={styles.fieldVisitsRow}>
+          <div className={styles.fieldVisitsLeftColumn}>
+            <Activities service={this.props.activityService}
+                      customerId={customerId} />
+            <Documents service={this.props.documentService}
                     customerId={customerId} />
-        <Documents service={this.props.documentService}
-                   customerId={customerId} />
-        <Weather service={this.props.weatherService}
-                 country={country} postalCode={postalCode} />
-        <Map service={this.props.mapService}
-             address={address} city={city} state={state}
-             country={country} postalCode={postalCode} />
-        
+            </div>
+          <div className={styles.fieldVisitsRightColumn}>
+            <PostToChannel customerId={customerId} customerName={customerName} />
+            <Map service={this.props.mapService}
+                address={address} city={city} state={state}
+                country={country} postalCode={postalCode} />
+          </div>
+        </div>
       </div>
     );
   }

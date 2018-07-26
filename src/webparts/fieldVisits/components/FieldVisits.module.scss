@@ -193,3 +193,43 @@
     height: auto;
   }
 }
+
+.documents {
+
+  border-top-style: solid;
+  border-width: 1px;
+
+  .documentsRow {
+    @include ms-Grid-row;
+    border-color: black;
+    border-top-style: hidden;
+    border-bottom-style: solid;
+    border-width: 1px;
+  }
+
+  .documentsRow:hover {
+    background-color: $ms-color-neutralLight
+  }
+  
+  .documentsNameColumn {
+    @include ms-Grid-col;
+    @include ms-sm4;
+    @include ms-md3;
+    @include ms-lg2;
+  };
+
+  .documentsAuthorColumn {
+    @include ms-Grid-col;
+    @include ms-sm4;
+    @include ms-md3;
+    @include ms-lg2;
+  };
+
+  .documentsDateColumn {
+    @include ms-Grid-col;
+    @include ms-sm4;
+    @include ms-md3;
+    @include ms-lg2;
+  };
+
+}

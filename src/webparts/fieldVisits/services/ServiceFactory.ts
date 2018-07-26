@@ -12,6 +12,9 @@ import WeatherServiceMock from './WeatherService/WeatherServiceMock';
 import { IMapService } from './MapService/IMapService';
 import MapService from './MapService/MapService';
 import MapServiceMock from './MapService/MapServiceMock';
+import { IDocumentService } from './DocumentService/IDocumentService';
+import DocumentService from './DocumentService/DocumentService';
+import DocumentServiceMock from './DocumentService/DocumentServiceMock';
 
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import { ServiceScope } from '@microsoft/sp-core-library';
@@ -58,5 +61,15 @@ export default class ServiceFactory {
         return (environmentType === EnvironmentType.Local) ?
             new MapServiceMock(mapApiKey) :
             new MapService(context, serviceScope, mapApiKey);
+    }
+
+    public static getDocumentService(
+        environmentType: EnvironmentType,
+        context: IWebPartContext,
+        serviceScope: ServiceScope): IDocumentService {
+
+        return (environmentType === EnvironmentType.Local) ?
+            new DocumentServiceMock() :
+            new DocumentService(context, serviceScope);
     }
 }

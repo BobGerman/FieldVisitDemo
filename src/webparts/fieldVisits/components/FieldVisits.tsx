@@ -4,6 +4,7 @@ import { escape } from '@microsoft/sp-lodash-subset';
 import { IVisitService } from '../services/VisitService/IVisitService';
 import { IWeatherService } from '../services/WeatherService/IWeatherService';
 import { IMapService } from '../services/MapService/IMapService';
+import { IDocumentService } from '../services/DocumentService/IDocumentService';
 
 import { IVisit } from '../model/IVisit';
 import { IUser } from '../model/IUser';
@@ -13,11 +14,13 @@ import { VisitList } from './VisitList';
 import { CompanyInfo } from './CompanyInfo';
 import { Weather } from './Weather';
 import { Map } from './Map';
+import { Documents } from './Documents';
 
 export interface IFieldVisitsProps {
   visitService: IVisitService;
   weatherService: IWeatherService;
   mapService: IMapService;
+  documentService: IDocumentService;
   currentUserEmail: string;
   groupEmail: string;
   groupId: string;
@@ -66,12 +69,14 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
     let state: string = null;
     let country: string = null;
     let postalCode: string = null;
+    let customerId:string = null;
     if (this.state.selectedVisit && this.state.selectedVisit.customer) {
       address = this.state.selectedVisit.customer.Address;
       city = this.state.selectedVisit.customer.City;
       state = this.state.selectedVisit.customer.Region;
       country = this.state.selectedVisit.customer.Country;
       postalCode = this.state.selectedVisit.customer.PostalCode;
+      customerId = this.state.selectedVisit.customer.CustomerID;
     }
 
     return (
@@ -85,6 +90,8 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
                   visitSelectionChanged={this.handleVisitSelectionChanged.bind(this)}
         />
         <CompanyInfo visit={this.state.selectedVisit} />
+        <Documents service={this.props.documentService}
+                   customerId={customerId} />
         <Weather service={this.props.weatherService}
                  country={country} postalCode={postalCode} />
         <Map service={this.props.mapService}

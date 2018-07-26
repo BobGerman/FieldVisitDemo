@@ -35,6 +35,9 @@ export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisi
       Environment.type, this.context, this.context.serviceScope,
       this.properties.mapApiKey
     );
+    const documentService = ServiceFactory.getDocumentService(
+      Environment.type, this.context, this.context.serviceScope,
+    );
 
     const element: React.ReactElement<IFieldVisitsProps > = React.createElement(
       FieldVisits,
@@ -44,6 +47,7 @@ export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisi
         visitService: visitService,
         weatherService: weatherService,
         mapService: mapService,
+        documentService: documentService,
         currentUserEmail: this.context.pageContext.user.email
       }
     );

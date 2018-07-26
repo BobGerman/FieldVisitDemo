@@ -37,7 +37,9 @@ export class Map extends React.Component<IMapProps, IMapState> {
 
             const locationSignature = this.getLocationSignature(
                 this.props.address, this.props.city, this.props.state,
-                this.props.country, this.props.postalCode)
+                this.props.country, this.props.postalCode);
+            const mapApiKey = this.props.service.getMapApiKey();
+
             if (this.state.locationSignature === locationSignature) {
 
                 // If here, the location state is valid, show it!
@@ -51,7 +53,8 @@ export class Map extends React.Component<IMapProps, IMapState> {
                 <div className={styles.weather}>
                   <div className={styles.weatherContainer}>
                     <div className={styles.weatherrow}>
-                        {`Map at ${latitude}, ${longitude}`}
+                        <img src={`https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/${latitude},${longitude}/16?mapSize=600,300&pp=${latitude},${longitude}&key=${mapApiKey}`} />
+                        <br />{`Map at ${latitude}, ${longitude}`}
                     </div>
                   </div>
                 </div>);

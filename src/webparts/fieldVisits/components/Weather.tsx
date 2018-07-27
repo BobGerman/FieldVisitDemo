@@ -13,6 +13,7 @@ export interface IWeatherProps {
 
 export interface IWeatherState {
     conditions: IWeatherConditions;
+    locationSignature: string;
 }
 
 export class Weather extends React.Component<IWeatherProps, IWeatherState> {
@@ -20,7 +21,8 @@ export class Weather extends React.Component<IWeatherProps, IWeatherState> {
     constructor() {
         super();
         this.state = {
-            conditions: null
+            conditions: null,
+            locationSignature: null
         };
     }
 
@@ -30,7 +32,11 @@ export class Weather extends React.Component<IWeatherProps, IWeatherState> {
             this.props.country.toLowerCase() == "usa" &&
             this.props.postalCode) {
 
-            if (this.state.conditions) {
+            const locationSignature = this.getLocationSignature(
+                this.props.country, this.props.postalCode);
+
+            if (this.state.conditions &&
+                this.state.locationSignature === locationSignature ) {
                 
                 const c = this.state.conditions;
                 const tempC = c.main.temp-273;
@@ -58,7 +64,8 @@ export class Weather extends React.Component<IWeatherProps, IWeatherState> {
                 this.props.service.getConditions(this.props.postalCode)
                     .then((conditions: IWeatherConditions) => {
                         this.setState({
-                            conditions: conditions
+                            conditions: conditions,
+                            locationSignature: locationSignature
                         });
                     });
 
@@ -70,4 +77,8 @@ export class Weather extends React.Component<IWeatherProps, IWeatherState> {
             );
         }
     }
+
+    private getLocationSignature(country: string, postalCode: string) {
+            return `${country}**${postalCode}`;
+        }
 }

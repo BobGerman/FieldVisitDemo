@@ -8,29 +8,50 @@ export interface IPostToChannelProps {
     customerName: string;
 }
 
-export class PostToChannel extends React.Component<IPostToChannelProps, {}> {
+export interface IPostToChannelState {
+    value: string;
+}
+
+export class PostToChannel extends React.Component<IPostToChannelProps, IPostToChannelState> {
+
+    constructor(props) {
+        super(props);
+        this.state = { value: `Post in the channel about ${props.customerName}` };
+    }
 
     public render(): React.ReactElement<IPostToChannelProps> {
 
         if (this.props.customerId && this.props.customerName) {
 
             return (
-                <div className={styles.postToChannel}>
-                    <div className={styles.postToChannelRow}>
-                      <div className={styles.postToChannelTextColumn}>
-                        <textarea className={styles.postToChannelTextArea}
-                            value={`Post in the channel about ${this.props.customerName}`}
-                        />
-                      </div>
-                      <div className={styles.postToChannelButtonColumn}>
-                        <input type='button' value='Send'
-                            className={styles.postToChannelButton} />
+                <form onSubmit={this.handleSubmit.bind(this)}>
+                    <div className={styles.postToChannel}>
+                        <div className={styles.postToChannelRow}>
+                            <div className={styles.postToChannelTextColumn}>
+                                <textarea className={styles.postToChannelTextArea}
+                                    onChange={this.handleChange.bind(this)}
+                                    value={this.state.value}
+                                />
+                            </div>
+                            <div className={styles.postToChannelButtonColumn}>
+                                <input type='submit' value='Send'
+                                    className={styles.postToChannelButton} />
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
+                </form>
             );
         } else {
-            return(<div />);
+            return (<div />);
         }
     }
+
+    private handleChange(event) {
+        this.setState({ value: event.target.value });
+    }
+
+    private handleSubmit(event) {
+        alert(`Posting: ${this.state.value}`);
+    }
+
 }

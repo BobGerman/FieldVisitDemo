@@ -3,9 +3,13 @@ import { escape, isEmpty } from '@microsoft/sp-lodash-subset';
 import styles from './FieldVisits.module.scss';
 import { inputProperties } from '../../../../node_modules/@uifabric/utilities';
 
+import { IConversationService } from '../services/ConversationService/IConversationService';
+import { INewChatThread, ContentType } from '../model/IConversation';
+
 export interface IPostToChannelProps {
     customerId: string;
     customerName: string;
+    conversationService: IConversationService;
 }
 
 export interface IPostToChannelState {
@@ -51,7 +55,12 @@ export class PostToChannel extends React.Component<IPostToChannelProps, IPostToC
     }
 
     private handleSubmit(event) {
-        alert(`Posting: ${this.state.value}`);
+//        alert(`Posting: ${this.state.value}`);
+        this.props.conversationService
+            .createChatThread(this.state.value, ContentType.text)
+            .then(() => {
+                this.setState({ value: '' });
+            });
     }
 
 }

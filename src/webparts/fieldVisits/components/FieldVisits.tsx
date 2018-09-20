@@ -6,6 +6,7 @@ import { IWeatherService } from '../services/WeatherService/IWeatherService';
 import { IMapService } from '../services/MapService/IMapService';
 import { IDocumentService } from '../services/DocumentService/IDocumentService';
 import { IActivityService } from '../services/ActivityService/IActivityService';
+import { IConversationService } from '../services/ConversationService/IConversationService';
 
 import { IVisit } from '../model/IVisit';
 import { IUser } from '../model/IUser';
@@ -25,6 +26,7 @@ export interface IFieldVisitsProps {
   mapService: IMapService;
   documentService: IDocumentService;
   activityService: IActivityService;
+  conversationService: IConversationService;
   currentUserEmail: string;
   groupEmail: string;
   groupId: string;
@@ -112,7 +114,9 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
                     customerId={customerId} />
             </div>
           <div className={styles.fieldVisitsRightColumn}>
-            <PostToChannel customerId={customerId} customerName={customerName} />
+            <PostToChannel customerId={customerId}
+                customerName={customerName} 
+                conversationService={this.props.conversationService}/>
             <Map service={this.props.mapService}
                 address={address} city={city} state={state}
                 country={country} postalCode={postalCode} />

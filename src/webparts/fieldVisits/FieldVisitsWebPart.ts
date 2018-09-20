@@ -36,10 +36,13 @@ export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisi
       this.properties.mapApiKey
     );
     const documentService = ServiceFactory.getDocumentService(
-      Environment.type, this.context, this.context.serviceScope,
+      Environment.type, this.context, this.context.serviceScope
     );
     const activityService = ServiceFactory.getActivityService(
-      Environment.type, this.context, this.context.serviceScope,
+      Environment.type, this.context, this.context.serviceScope
+    );
+    const conversationService = ServiceFactory.getConversationService(
+      Environment.type, this.context, this.context.serviceScope
     );
 
     const element: React.ReactElement<IFieldVisitsProps > = React.createElement(
@@ -52,6 +55,7 @@ export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisi
         mapService: mapService,
         documentService: documentService,
         activityService: activityService,
+        conversationService: conversationService,
         currentUserEmail: this.context.pageContext.user.email
       }
     );

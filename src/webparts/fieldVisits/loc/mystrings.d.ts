@@ -5,6 +5,8 @@ declare interface IFieldVisitsWebPartStrings {
   GroupIdLabel: string;
   OpenWeatherMapsApiKeyLabel: string;
   MapApiKeyLabel: string;
+  TeamIdLabel: string;
+  ChannelIdLabel: string;
 }
 
 declare module 'FieldVisitsWebPartStrings' {

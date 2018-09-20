@@ -19,6 +19,7 @@ import { IActivityService } from './ActivityService/IActivityService';
 import ActivityServiceMock from './ActivityService/ActivityServiceMock';
 import { IConversationService } from './ConversationService/IConversationService';
 import ConversationServiceMock from './ConversationService/ConversationServiceMock';
+import ConversationServiceTeams from './ConversationService/ConversationServiceTeams';
 
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import { ServiceScope } from '@microsoft/sp-core-library';
@@ -90,10 +91,12 @@ export default class ServiceFactory {
     public static getConversationService(
         environmentType: EnvironmentType,
         context: IWebPartContext,
-        serviceScope: ServiceScope): IConversationService {
+        serviceScope: ServiceScope,
+        teamId: string,
+        channelId: string): IConversationService {
 
         return (environmentType === EnvironmentType.Local) ?
             new ConversationServiceMock() :
-            new ConversationServiceMock();
+            new ConversationServiceTeams(context, serviceScope, teamId, channelId);
     }
 }

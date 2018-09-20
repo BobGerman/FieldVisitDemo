@@ -94,10 +94,10 @@ export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisi
                   label: strings.MapApiKeyLabel
                 }),
                 PropertyPaneTextField('teamId', {
-                  label: strings.MapApiKeyLabel
+                  label: strings.TeamIdLabel
                 }),
                 PropertyPaneTextField('channelId', {
-                  label: strings.MapApiKeyLabel
+                  label: strings.ChannelIdLabel
                 })
               ]
             }

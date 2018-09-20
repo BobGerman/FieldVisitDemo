@@ -18,9 +18,9 @@ export interface IPostToChannelState {
 
 export class PostToChannel extends React.Component<IPostToChannelProps, IPostToChannelState> {
 
-    constructor(props) {
-        super(props);
-        this.state = { value: `Post in the channel about ${props.customerName}` };
+    constructor() {
+        super();
+        this.state = { value: '' };
     }
 
     public render(): React.ReactElement<IPostToChannelProps> {
@@ -28,22 +28,21 @@ export class PostToChannel extends React.Component<IPostToChannelProps, IPostToC
         if (this.props.customerId && this.props.customerName) {
 
             return (
-                <form onSubmit={this.handleSubmit.bind(this)}>
-                    <div className={styles.postToChannel}>
-                        <div className={styles.postToChannelRow}>
-                            <div className={styles.postToChannelTextColumn}>
-                                <textarea className={styles.postToChannelTextArea}
-                                    onChange={this.handleChange.bind(this)}
-                                    value={this.state.value}
-                                />
-                            </div>
-                            <div className={styles.postToChannelButtonColumn}>
-                                <input type='submit' value='Send'
-                                    className={styles.postToChannelButton} />
-                            </div>
+                <div className={styles.postToChannel}>
+                    <div className={styles.postToChannelRow}>
+                        <div className={styles.postToChannelTextColumn}>
+                            <textarea className={styles.postToChannelTextArea}
+                                onChange={this.handleChange.bind(this)}
+                                value={this.state.value}
+                            />
+                        </div>
+                        <div className={styles.postToChannelButtonColumn}>
+                            <input type='button' value='Send'
+                                onClick={this.handleClick.bind(this)}
+                                className={styles.postToChannelButton} />
                         </div>
                     </div>
-                </form>
+                </div>
             );
         } else {
             return (<div />);
@@ -54,10 +53,10 @@ export class PostToChannel extends React.Component<IPostToChannelProps, IPostToC
         this.setState({ value: event.target.value });
     }
 
-    private handleSubmit(event) {
-//        alert(`Posting: ${this.state.value}`);
+    private handleClick(event) {
+        const message = `${this.props.customerName}: ${this.state.value}`;
         this.props.conversationService
-            .createChatThread(this.state.value, ContentType.text)
+            .createChatThread(message, ContentType.text)
             .then(() => {
                 this.setState({ value: '' });
             });

@@ -7,6 +7,7 @@ import { IMapService } from '../services/MapService/IMapService';
 import { IDocumentService } from '../services/DocumentService/IDocumentService';
 import { IActivityService } from '../services/ActivityService/IActivityService';
 import { IConversationService } from '../services/ConversationService/IConversationService';
+import { IPhotoService } from '../services/PhotoService/IPhotoService';
 
 import { IVisit } from '../model/IVisit';
 import { IUser } from '../model/IUser';
@@ -19,6 +20,7 @@ import { Map } from './Map';
 import { Documents } from './Documents';
 import { Activities } from './Activities';
 import { PostToChannel } from './PostToChannel';
+import { Photos } from './Photos';
 
 export interface IFieldVisitsProps {
   visitService: IVisitService;
@@ -27,6 +29,7 @@ export interface IFieldVisitsProps {
   documentService: IDocumentService;
   activityService: IActivityService;
   conversationService: IConversationService;
+  photoService: IPhotoService;
   currentUserEmail: string;
   groupEmail: string;
   groupId: string;
@@ -57,17 +60,17 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
 
     if (!this.state.dataFetched) {
       this.props.visitService.getGroupVisits(this.props.groupId, this.props.groupEmail)
-      .then ((visits) => {
-        var u = this.getUsersFromVisits(visits);
-        var fv = this.filterVisitsBySelectedUsers(visits, u);
-        this.setState ({
-          users: u,
-          allVisits: visits,
-          filteredVisits: fv,
-          selectedVisit: null,
-          dataFetched: true
+        .then((visits) => {
+          var u = this.getUsersFromVisits(visits);
+          var fv = this.filterVisitsBySelectedUsers(visits, u);
+          this.setState({
+            users: u,
+            allVisits: visits,
+            filteredVisits: fv,
+            selectedVisit: null,
+            dataFetched: true
+          });
         });
-      });
     }
 
     let address: string = null;
@@ -75,8 +78,8 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
     let state: string = null;
     let country: string = null;
     let postalCode: string = null;
-    let customerId:string = null;
-    let customerName:string = null;
+    let customerId: string = null;
+    let customerName: string = null;
     if (this.state.selectedVisit && this.state.selectedVisit.customer) {
       address = this.state.selectedVisit.customer.Address;
       city = this.state.selectedVisit.customer.City;
@@ -92,34 +95,36 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
       <div className={styles.fieldVisits}>
         <div className={styles.fieldVisitsRow}>
           <div className={styles.fieldVisitsLeftColumn}>
-            <UserTabs users={this.state.users} 
-                    userSelectionChanged={this.handleUserSelectionChanged.bind(this)}
+            <UserTabs users={this.state.users}
+              userSelectionChanged={this.handleUserSelectionChanged.bind(this)}
             />
             <VisitList visits={this.state.filteredVisits}
-                      selectedVisit={this.state.selectedVisit}
-                      visitSelectionChanged={this.handleVisitSelectionChanged.bind(this)}
+              selectedVisit={this.state.selectedVisit}
+              visitSelectionChanged={this.handleVisitSelectionChanged.bind(this)}
             />
           </div>
           <div className={styles.fieldVisitsRightColumn}>
             <Weather service={this.props.weatherService}
-                  country={country} postalCode={postalCode} />
+              country={country} postalCode={postalCode} />
             <CompanyInfo visit={this.state.selectedVisit} />
           </div>
         </div>
         <div className={styles.fieldVisitsRow}>
           <div className={styles.fieldVisitsLeftColumn}>
             <Activities service={this.props.activityService}
-                      customerId={customerId} />
+              customerId={customerId} />
             <Documents service={this.props.documentService}
-                    customerId={customerId} />
-            </div>
+              customerId={customerId} />
+            <Photos service={this.props.photoService}
+              customerId={customerId} />
+          </div>
           <div className={styles.fieldVisitsRightColumn}>
             <PostToChannel customerId={customerId}
-                customerName={customerName} 
-                conversationService={this.props.conversationService}/>
+              customerName={customerName}
+              conversationService={this.props.conversationService} />
             <Map service={this.props.mapService}
-                address={address} city={city} state={state}
-                country={country} postalCode={postalCode} />
+              address={address} city={city} state={state}
+              country={country} postalCode={postalCode} />
           </div>
         </div>
       </div>
@@ -138,7 +143,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
     });
     var fv = this.filterVisitsBySelectedUsers(this.state.allVisits, newUsers);
     var sv = fv.filter((v) => (v == this.state.selectedVisit)).length > 0 ?
-              this.state.selectedVisit : null;
+      this.state.selectedVisit : null;
     this.setState({
       users: newUsers,
       filteredVisits: fv,
@@ -177,17 +182,17 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
       if (visit.calendarItem.Attendees) {
         visit.calendarItem.Attendees.forEach((attendee) => {
           if ((attendee.email != "?? GROUP EMAIL ??") &&
-              (result.filter((i:IUser) => (i.email == attendee.email)).length == 0)) {
-                result.push({
-                  fullName: attendee.fullName,
-                  email: attendee.email,
-                  isSelected: attendee.email == this.props.currentUserEmail
-                });
-             }
+            (result.filter((i: IUser) => (i.email == attendee.email)).length == 0)) {
+            result.push({
+              fullName: attendee.fullName,
+              email: attendee.email,
+              isSelected: attendee.email == this.props.currentUserEmail
+            });
+          }
         });
       }
     });
 
-    return result.sort((a,b) => (a.fullName < b.fullName ? -1 : 1));
+    return result.sort((a, b) => (a.fullName < b.fullName ? -1 : 1));
   }
 }

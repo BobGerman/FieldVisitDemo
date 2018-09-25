@@ -20,6 +20,8 @@ import ActivityServiceMock from './ActivityService/ActivityServiceMock';
 import { IConversationService } from './ConversationService/IConversationService';
 import ConversationServiceMock from './ConversationService/ConversationServiceMock';
 import ConversationServiceTeams from './ConversationService/ConversationServiceTeams';
+import { IPhotoService } from './PhotoService/IPhotoService';
+import PhotoServiceMock from './PhotoService/PhotoServiceMock';
 
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import { ServiceScope } from '@microsoft/sp-core-library';
@@ -98,5 +100,15 @@ export default class ServiceFactory {
         return (environmentType === EnvironmentType.Local) ?
             new ConversationServiceMock() :
             new ConversationServiceTeams(context, serviceScope, teamId, channelId);
+    }
+
+    public static getPhotoService(
+        environmentType: EnvironmentType,
+        context: IWebPartContext,
+        serviceScope: ServiceScope): IPhotoService {
+
+        return (environmentType === EnvironmentType.Local) ?
+            new PhotoServiceMock() :
+            new PhotoServiceMock();
     }
 }

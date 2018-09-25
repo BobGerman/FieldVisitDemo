@@ -47,6 +47,10 @@ export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisi
       Environment.type, this.context, this.context.serviceScope,
       this.properties.teamId, this.properties.channelId
     );
+    const photoService = ServiceFactory.getPhotoService(
+      Environment.type, this.context, this.context.serviceScope
+    );
+
 
     const element: React.ReactElement<IFieldVisitsProps > = React.createElement(
       FieldVisits,
@@ -59,6 +63,7 @@ export default class FieldVisitsWebPart extends BaseClientSideWebPart<IFieldVisi
         documentService: documentService,
         activityService: activityService,
         conversationService: conversationService,
+        photoService: photoService,
         currentUserEmail: this.context.pageContext.user.email
       }
     );

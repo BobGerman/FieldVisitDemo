@@ -1,5 +1,6 @@
 import { IPhotoService } from './IPhotoService';
 import { IPhotosResponse } from './IPhotosResponse';
+import { IPhoto } from '../../model/IPhoto';
 
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import { ServiceScope } from '@microsoft/sp-core-library';
@@ -14,9 +15,9 @@ export default class PhotoService implements IPhotoService {
         this.serviceScope = serviceScope;
     }
 
-    public getPhotos(customerId: string): Promise<string[]> {
+    public getPhotos(customerId: string): Promise<IPhoto[]> {
 
-        var result = new Promise<string[]>((resolve, reject) => {
+        var result = new Promise<IPhoto[]>((resolve, reject) => {
 
             const absoluteUrl = this.context.pageContext.web.absoluteUrl;
             const serverRelativeUrl = this.context.pageContext.web.serverRelativeUrl;
@@ -38,17 +39,19 @@ export default class PhotoService implements IPhotoService {
                     }
                 })
                 .then((o: IPhotosResponse) => {
-                    let files: string[] = [];
+                    let files: IPhoto[] = [];
                     o.value.forEach((file) => {
-                        files.push(file.ServerRelativeUrl);
+                        files.push({
+                            name: file.Name,
+                            url: file.ServerRelativeUrl
+                        });
                     });
                     resolve(files);
                 });
-            // TODO: Handle exception
+                // TODO: Handle exception
 
-        });
-
-        return result;
-    }
+            });
+            return result;
+        }
 
 }

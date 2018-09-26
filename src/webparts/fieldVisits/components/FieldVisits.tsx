@@ -73,62 +73,61 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
         });
     }
 
-    let address: string = null;
-    let city: string = null;
-    let state: string = null;
-    let country: string = null;
-    let postalCode: string = null;
-    let customerId: string = null;
-    let customerName: string = null;
-    if (this.state.selectedVisit && this.state.selectedVisit.customer) {
-      address = this.state.selectedVisit.customer.Address;
-      city = this.state.selectedVisit.customer.City;
-      state = this.state.selectedVisit.customer.Region;
-      country = this.state.selectedVisit.customer.Country;
-      postalCode = this.state.selectedVisit.customer.PostalCode;
-      customerId = this.state.selectedVisit.customer.CustomerID;
-      customerName = this.state.selectedVisit.customer.CompanyName;
+    if (this.state.dataFetched) {
+
+      let address: string = null;
+      let city: string = null;
+      let state: string = null;
+      let country: string = null;
+      let postalCode: string = null;
+      let customerId: string = null;
+      let customerName: string = null;
+      if (this.state.selectedVisit && this.state.selectedVisit.customer) {
+        address = this.state.selectedVisit.customer.Address;
+        city = this.state.selectedVisit.customer.City;
+        state = this.state.selectedVisit.customer.Region;
+        country = this.state.selectedVisit.customer.Country;
+        postalCode = this.state.selectedVisit.customer.PostalCode;
+        customerId = this.state.selectedVisit.customer.CustomerID;
+        customerName = this.state.selectedVisit.customer.CompanyName;
+      }
+
+      return (
+
+        <div className={styles.fieldVisits}>
+          <div className={styles.fieldVisitsRow}>
+            <div className={styles.fieldVisitsLeftColumn}>
+              <UserTabs users={this.state.users}
+                userSelectionChanged={this.handleUserSelectionChanged.bind(this)}
+              />
+              <VisitList visits={this.state.filteredVisits}
+                selectedVisit={this.state.selectedVisit}
+                visitSelectionChanged={this.handleVisitSelectionChanged.bind(this)}
+              />
+              <Activities service={this.props.activityService}
+                customerId={customerId} />
+              <Documents service={this.props.documentService}
+                customerId={customerId} />
+              <Photos service={this.props.photoService}
+                customerId={customerId} />
+            </div>
+            <div className={styles.fieldVisitsRightColumn}>
+              <Weather service={this.props.weatherService}
+                country={country} postalCode={postalCode} />
+              <CompanyInfo visit={this.state.selectedVisit} />
+              <PostToChannel customerId={customerId}
+                customerName={customerName}
+                conversationService={this.props.conversationService} />
+              <Map service={this.props.mapService}
+                address={address} city={city} state={state}
+                country={country} postalCode={postalCode} />
+            </div>
+          </div>
+        </div>
+      );
+    } else {
+      return (<div>Loading...</div>);
     }
-
-    return (
-
-      <div className={styles.fieldVisits}>
-        <div className={styles.fieldVisitsRow}>
-          <div className={styles.fieldVisitsLeftColumn}>
-            <UserTabs users={this.state.users}
-              userSelectionChanged={this.handleUserSelectionChanged.bind(this)}
-            />
-            <VisitList visits={this.state.filteredVisits}
-              selectedVisit={this.state.selectedVisit}
-              visitSelectionChanged={this.handleVisitSelectionChanged.bind(this)}
-            />
-          </div>
-          <div className={styles.fieldVisitsRightColumn}>
-            <Weather service={this.props.weatherService}
-              country={country} postalCode={postalCode} />
-            <CompanyInfo visit={this.state.selectedVisit} />
-          </div>
-        </div>
-        <div className={styles.fieldVisitsRow}>
-          <div className={styles.fieldVisitsLeftColumn}>
-            <Activities service={this.props.activityService}
-              customerId={customerId} />
-            <Documents service={this.props.documentService}
-              customerId={customerId} />
-            <Photos service={this.props.photoService}
-              customerId={customerId} />
-          </div>
-          <div className={styles.fieldVisitsRightColumn}>
-            <PostToChannel customerId={customerId}
-              customerName={customerName}
-              conversationService={this.props.conversationService} />
-            <Map service={this.props.mapService}
-              address={address} city={city} state={state}
-              country={country} postalCode={postalCode} />
-          </div>
-        </div>
-      </div>
-    );
   }
 
   private handleUserSelectionChanged(user: IUser) {

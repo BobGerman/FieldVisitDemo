@@ -22,6 +22,7 @@ import ConversationServiceMock from './ConversationService/ConversationServiceMo
 import ConversationServiceTeams from './ConversationService/ConversationServiceTeams';
 import { IPhotoService } from './PhotoService/IPhotoService';
 import PhotoServiceMock from './PhotoService/PhotoServiceMock';
+import PhotoService from './PhotoService/PhotoService';
 
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import { ServiceScope } from '@microsoft/sp-core-library';
@@ -109,6 +110,6 @@ export default class ServiceFactory {
 
         return (environmentType === EnvironmentType.Local) ?
             new PhotoServiceMock() :
-            new PhotoServiceMock();
+            new PhotoService(context, serviceScope);
     }
 }

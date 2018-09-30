@@ -9,6 +9,11 @@ import { INewChatThread, ContentType } from '../model/IConversation';
 export interface IPostToChannelProps {
     customerId: string;
     customerName: string;
+    address: string;
+    city: string;
+    state: string;
+    country: string;
+    postalCode: string;
     conversationService: IConversationService;
 }
 
@@ -54,9 +59,22 @@ export class PostToChannel extends React.Component<IPostToChannelProps, IPostToC
     }
 
     private handleClick(event) {
-        const message = `${this.props.customerName}: ${this.state.value}`;
+        const message = 
+        `
+        <div style="border-style:solid; border-width:1px; padding:10px;">
+          <div style="background: green; color: white">
+            Regarding ${this.props.customerName}
+          </div>
+          ${this.props.address}<br />
+          ${this.props.city}, ${this.props.state} ${this.props.postalCode}<br />
+          <hr />
+          ${this.state.value}
+        </div><br />
+        `
+        ;
+
         this.props.conversationService
-            .createChatThread(message, ContentType.text)
+            .createChatThread(message, ContentType.html)
             .then(() => {
                 this.setState({ value: '' });
             });

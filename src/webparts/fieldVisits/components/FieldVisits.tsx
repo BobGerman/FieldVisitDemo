@@ -117,6 +117,11 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
               <CompanyInfo visit={this.state.selectedVisit} />
               <PostToChannel customerId={customerId}
                 customerName={customerName}
+                address={address}
+                city={city}
+                state={state}
+                country={country}
+                postalCode={postalCode}
                 conversationService={this.props.conversationService} />
               <Map service={this.props.mapService}
                 address={address} city={city} state={state}

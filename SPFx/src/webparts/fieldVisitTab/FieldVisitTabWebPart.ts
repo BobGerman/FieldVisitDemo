@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
-import { Version } from '@microsoft/sp-core-library';
+import { Version, Environment, EnvironmentType } from '@microsoft/sp-core-library';
 import {
   BaseClientSideWebPart,
   IPropertyPaneConfiguration,
@@ -8,11 +8,18 @@ import {
 } from '@microsoft/sp-webpart-base';
 
 import * as strings from 'FieldVisitTabWebPartStrings';
-import FieldVisitTab from './components/FieldVisitTab';
-import { IFieldVisitTabProps } from './components/IFieldVisitTabProps';
+import { IFieldVisitsProps, FieldVisits }
+  from './components/FieldVisits';
+
+import ServiceFactory from './services/ServiceFactory';
 
 export interface IFieldVisitTabWebPartProps {
-  description: string;
+  groupEmail: string;
+  groupId: string;
+  owmApiKey: string;
+  mapApiKey: string;
+  teamId: string;
+  channelId: string;
 }
 
 export default class FieldVisitTabWebPart extends BaseClientSideWebPart<IFieldVisitTabWebPartProps> {
@@ -34,11 +41,45 @@ export default class FieldVisitTabWebPart extends BaseClientSideWebPart<IFieldVi
 
   public render(): void {
 
-    const element: React.ReactElement<IFieldVisitTabProps> = React.createElement(
-      FieldVisitTab,
+    const visitService = ServiceFactory.getVisitService(
+      Environment.type, this.context, this.context.serviceScope
+    );
+    const weatherService = ServiceFactory.getWeatherService(
+      Environment.type, this.context, this.context.serviceScope,
+      this.properties.owmApiKey
+    );
+    const mapService = ServiceFactory.getMapService(
+      Environment.type, this.context, this.context.serviceScope,
+      this.properties.mapApiKey
+    );
+    const documentService = ServiceFactory.getDocumentService(
+      Environment.type, this.context, this.context.serviceScope
+    );
+    const activityService = ServiceFactory.getActivityService(
+      Environment.type, this.context, this.context.serviceScope
+    );
+    const conversationService = ServiceFactory.getConversationService(
+      Environment.type, this.context, this.context.serviceScope,
+      this.properties.teamId, this.properties.channelId
+    );
+    const photoService = ServiceFactory.getPhotoService(
+      Environment.type, this.context, this.context.serviceScope
+    );
+
+
+    const element: React.ReactElement<IFieldVisitsProps > = React.createElement(
+      FieldVisits,
       {
-        description: this._teamsContext ? "Hi, I'm a tab!" : "Hi, I'm a web part!"
-        // this.properties.description
+        groupEmail: this.properties.groupEmail,
+        groupId: this.properties.groupId,
+        visitService: visitService,
+        weatherService: weatherService,
+        mapService: mapService,
+        documentService: documentService,
+        activityService: activityService,
+        conversationService: conversationService,
+        photoService: photoService,
+        currentUserEmail: this.context.pageContext.user.email
       }
     );
 
@@ -64,8 +105,23 @@ export default class FieldVisitTabWebPart extends BaseClientSideWebPart<IFieldVi
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
+                PropertyPaneTextField('groupEmail', {
+                  label: strings.GroupEmailLabel
+                }),
+                PropertyPaneTextField('groupId', {
+                  label: strings.GroupIdLabel
+                }),
+                PropertyPaneTextField('owmApiKey', {
+                  label: strings.OpenWeatherMapsApiKeyLabel
+                }),
+                PropertyPaneTextField('mapApiKey', {
+                  label: strings.MapApiKeyLabel
+                }),
+                PropertyPaneTextField('teamId', {
+                  label: strings.TeamIdLabel
+                }),
+                PropertyPaneTextField('channelId', {
+                  label: strings.ChannelIdLabel
                 })
               ]
             }

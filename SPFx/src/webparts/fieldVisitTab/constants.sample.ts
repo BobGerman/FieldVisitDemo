@@ -1,9 +1,3 @@
-export const constants = {
-    groupEmail: '',
-    groupId: '',
-    owmApiKey: '',
-    mapApiKey: '',
-    teamId: '',
-    channelId: ''
-  };
-  
+export const owmApiKey: string = "";
+export const mapApiKey: string = "";
+

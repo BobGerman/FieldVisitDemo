@@ -11,6 +11,7 @@ import * as strings from 'FieldVisitTabWebPartStrings';
 import { IFieldVisitsProps, FieldVisits }
   from './components/FieldVisits';
 
+import * as constants from './constants';
 import ServiceFactory from './services/ServiceFactory';
 
 export interface IFieldVisitTabWebPartProps {
@@ -24,17 +25,33 @@ export interface IFieldVisitTabWebPartProps {
 
 export default class FieldVisitTabWebPart extends BaseClientSideWebPart<IFieldVisitTabWebPartProps> {
 
-  private _teamsContext: microsoftTeams.Context;
-  
+  private teamsContext: microsoftTeams.Context;
+  private groupName: string;
+  private groupId: string;
+  private owmApiKey: string;
+  private mapApiKey: string;
+  private channelId: string;
+
   protected onInit(): Promise<any> {
     let retVal: Promise<any> = Promise.resolve();
     if (this.context.microsoftTeams) {
       retVal = new Promise((resolve, reject) => {
         this.context.microsoftTeams.getContext(context => {
-          this._teamsContext = context;
+          this.teamsContext = context;
+          this.groupName = context.teamName;
+          this.groupId = context.groupId;
+          this.owmApiKey = constants.owmApiKey;
+          this.mapApiKey = constants.mapApiKey;
+          this.channelId = context.channelId;
           resolve();
         });
       });
+    } else {
+      this.groupName = this.properties.groupName;
+      this.groupId = this.properties.groupId;
+      this.owmApiKey = constants.owmApiKey;
+      this.mapApiKey = constants.mapApiKey;
+      this.channelId = this.properties.channelId;
     }
     return retVal;
   }
@@ -46,11 +63,11 @@ export default class FieldVisitTabWebPart extends BaseClientSideWebPart<IFieldVi
     );
     const weatherService = ServiceFactory.getWeatherService(
       Environment.type, this.context, this.context.serviceScope,
-      this.properties.owmApiKey
+      this.owmApiKey
     );
     const mapService = ServiceFactory.getMapService(
       Environment.type, this.context, this.context.serviceScope,
-      this.properties.mapApiKey
+      this.mapApiKey
     );
     const documentService = ServiceFactory.getDocumentService(
       Environment.type, this.context, this.context.serviceScope
@@ -67,11 +84,11 @@ export default class FieldVisitTabWebPart extends BaseClientSideWebPart<IFieldVi
     );
 
 
-    const element: React.ReactElement<IFieldVisitsProps > = React.createElement(
+    const element: React.ReactElement<IFieldVisitsProps> = React.createElement(
       FieldVisits,
       {
-        groupName: this.properties.groupName,
-        groupId: this.properties.groupId,
+        groupName: this.groupName,
+        groupId: this.groupId,
         visitService: visitService,
         weatherService: weatherService,
         mapService: mapService,

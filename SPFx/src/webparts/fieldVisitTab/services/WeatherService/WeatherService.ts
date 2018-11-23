@@ -4,16 +4,15 @@ import { IWeatherConditions } from '../../model/IWeatherConditions';
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import { ServiceScope } from '@microsoft/sp-core-library';
 import { HttpClient, HttpClientResponse } from '@microsoft/sp-http';
+import * as constants from '../../constants';
 
 export default class WeatherService implements IWeatherService {
 
     private context: IWebPartContext;
     private serviceScope: ServiceScope;
-    private owmApiKey: string;
-    constructor(context: IWebPartContext, serviceScope: ServiceScope, owmApiKey: string) {
+    constructor(context: IWebPartContext, serviceScope: ServiceScope) {
         this.context = context;
         this.serviceScope = serviceScope;
-        this.owmApiKey = owmApiKey;
     }
 
     public getConditions (zip: string) : Promise<IWeatherConditions> {
@@ -22,7 +21,7 @@ export default class WeatherService implements IWeatherService {
             ((resolve, reject) => {
 
             this.context.httpClient
-            .fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${zip},us&appid=${this.owmApiKey}`,
+            .fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${zip},us&appid=${constants.owmApiKey}`,
                     HttpClient.configurations.v1,
                     {
                         method: 'GET',

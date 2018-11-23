@@ -11,7 +11,6 @@ import * as strings from 'FieldVisitTabWebPartStrings';
 import { IFieldVisitsProps, FieldVisits }
   from './components/FieldVisits';
 
-import * as constants from './constants';
 import ServiceFactory from './services/ServiceFactory';
 
 export interface IFieldVisitTabWebPartProps {
@@ -28,8 +27,6 @@ export default class FieldVisitTabWebPart extends BaseClientSideWebPart<IFieldVi
   private teamsContext: microsoftTeams.Context;
   private groupName: string;
   private groupId: string;
-  private owmApiKey: string;
-  private mapApiKey: string;
   private channelId: string;
 
   protected onInit(): Promise<any> {
@@ -40,8 +37,6 @@ export default class FieldVisitTabWebPart extends BaseClientSideWebPart<IFieldVi
           this.teamsContext = context;
           this.groupName = context.teamName;
           this.groupId = context.groupId;
-          this.owmApiKey = constants.owmApiKey;
-          this.mapApiKey = constants.mapApiKey;
           this.channelId = context.channelId;
           resolve();
         });
@@ -49,8 +44,6 @@ export default class FieldVisitTabWebPart extends BaseClientSideWebPart<IFieldVi
     } else {
       this.groupName = this.properties.groupName;
       this.groupId = this.properties.groupId;
-      this.owmApiKey = constants.owmApiKey;
-      this.mapApiKey = constants.mapApiKey;
       this.channelId = this.properties.channelId;
     }
     return retVal;
@@ -62,13 +55,11 @@ export default class FieldVisitTabWebPart extends BaseClientSideWebPart<IFieldVi
       Environment.type, this.context, this.context.serviceScope
     );
     const weatherService = ServiceFactory.getWeatherService(
-      Environment.type, this.context, this.context.serviceScope,
-      this.owmApiKey
-    );
+      Environment.type, this.context, this.context.serviceScope);
+
     const mapService = ServiceFactory.getMapService(
-      Environment.type, this.context, this.context.serviceScope,
-      this.mapApiKey
-    );
+      Environment.type, this.context, this.context.serviceScope);
+      
     const documentService = ServiceFactory.getDocumentService(
       Environment.type, this.context, this.context.serviceScope
     );

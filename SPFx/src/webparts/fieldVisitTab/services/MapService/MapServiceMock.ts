@@ -1,12 +1,8 @@
 import { IMapService } from './IMapService';
 import { IMapLocation } from '../../model/IMapLocation';
+import * as constants from '../../constants';
 
 export default class MapServiceMock implements IMapService {
-
-    private mapApiKey: string;
-    constructor(mapApiKey: string) {
-        this.mapApiKey = mapApiKey;
-    }
 
     // US customers from Northwind database
     private mockData: IMapLocation =
@@ -92,6 +88,6 @@ export default class MapServiceMock implements IMapService {
     }
 
     public getMapApiKey(): string {
-        return this.mapApiKey;
+        return constants.mapApiKey;
     }
 }

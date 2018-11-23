@@ -52,23 +52,21 @@ export default class ServiceFactory {
     public static getWeatherService(
         environmentType: EnvironmentType,
         context: WebPartContext,
-        serviceScope: ServiceScope,
-        owmApiKey: string): IWeatherService {
+        serviceScope: ServiceScope): IWeatherService {
 
             return (environmentType === EnvironmentType.Local) ?
                 new WeatherServiceMock() :
-                new WeatherService(context, serviceScope, owmApiKey);
+                new WeatherService(context, serviceScope);
     }
 
     public static getMapService(
         environmentType: EnvironmentType,
         context: WebPartContext,
-        serviceScope: ServiceScope,
-        mapApiKey: string): IMapService {
+        serviceScope: ServiceScope): IMapService {
 
         return (environmentType === EnvironmentType.Local) ?
-            new MapServiceMock(mapApiKey) :
-            new MapService(context, serviceScope, mapApiKey);
+            new MapServiceMock() :
+            new MapService(context, serviceScope);
     }
 
     public static getDocumentService(

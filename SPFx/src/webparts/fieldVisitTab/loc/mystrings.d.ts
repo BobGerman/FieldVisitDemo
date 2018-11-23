@@ -1,7 +1,7 @@
 declare interface IFieldVisitTabWebPartStrings {
   PropertyPaneDescription: string;
   BasicGroupName: string;
-  GroupEmailLabel: string;
+  GroupNameLabel: string;
   GroupIdLabel: string;
   OpenWeatherMapsApiKeyLabel: string;
   MapApiKeyLabel: string;

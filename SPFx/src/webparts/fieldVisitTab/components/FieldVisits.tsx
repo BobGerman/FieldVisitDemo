@@ -31,7 +31,7 @@ export interface IFieldVisitsProps {
   conversationService: IConversationService;
   photoService: IPhotoService;
   currentUserEmail: string;
-  groupEmail: string;
+  groupName: string;
   groupId: string;
 }
 
@@ -59,7 +59,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
   public render(): React.ReactElement<IFieldVisitsProps> {
 
     if (!this.state.dataFetched) {
-      this.props.visitService.getGroupVisits(this.props.groupId, this.props.groupEmail)
+      this.props.visitService.getGroupVisits(this.props.groupId, this.props.groupName)
         .then((visits) => {
           var u = this.getUsersFromVisits(visits);
           var fv = this.filterVisitsBySelectedUsers(visits, u);

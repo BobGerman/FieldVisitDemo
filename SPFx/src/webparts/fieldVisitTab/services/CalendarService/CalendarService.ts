@@ -18,7 +18,7 @@ export default class CalendarService implements ICalendarService {
         this.serviceScope = serviceScope;
     }
 
-    public getGroupCalendarItems(groupId: string, groupEmail: string) {
+    public getGroupCalendarItems(groupId: string, groupName: string) {
 
         var result = new Promise<ICalendarItem[]>((resolve, reject) => {
 
@@ -39,8 +39,8 @@ export default class CalendarService implements ICalendarService {
 
                                     let attendees: IUser[] = [];
                                     event.attendees.forEach((user) => {
-                                        if (user.emailAddress.address.toLowerCase() !=
-                                            groupEmail.toLowerCase()) {
+                                        if (user.emailAddress.name.toLowerCase() !=
+                                            groupName.toLowerCase()) {
                                             attendees.push({
                                                 fullName: user.emailAddress.name,
                                                 email: user.emailAddress.address

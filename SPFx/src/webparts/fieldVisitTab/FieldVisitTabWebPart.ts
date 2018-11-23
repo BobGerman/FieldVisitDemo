@@ -14,7 +14,7 @@ import { IFieldVisitsProps, FieldVisits }
 import ServiceFactory from './services/ServiceFactory';
 
 export interface IFieldVisitTabWebPartProps {
-  groupEmail: string;
+  groupName: string;
   groupId: string;
   owmApiKey: string;
   mapApiKey: string;
@@ -70,7 +70,7 @@ export default class FieldVisitTabWebPart extends BaseClientSideWebPart<IFieldVi
     const element: React.ReactElement<IFieldVisitsProps > = React.createElement(
       FieldVisits,
       {
-        groupEmail: this.properties.groupEmail,
+        groupName: this.properties.groupName,
         groupId: this.properties.groupId,
         visitService: visitService,
         weatherService: weatherService,
@@ -105,8 +105,8 @@ export default class FieldVisitTabWebPart extends BaseClientSideWebPart<IFieldVi
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('groupEmail', {
-                  label: strings.GroupEmailLabel
+                PropertyPaneTextField('groupName', {
+                  label: strings.GroupNameLabel
                 }),
                 PropertyPaneTextField('groupId', {
                   label: strings.GroupIdLabel

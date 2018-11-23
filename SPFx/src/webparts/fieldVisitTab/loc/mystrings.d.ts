@@ -3,9 +3,6 @@ declare interface IFieldVisitTabWebPartStrings {
   BasicGroupName: string;
   GroupNameLabel: string;
   GroupIdLabel: string;
-  OpenWeatherMapsApiKeyLabel: string;
-  MapApiKeyLabel: string;
-  TeamIdLabel: string;
   ChannelIdLabel: string;
 }
 

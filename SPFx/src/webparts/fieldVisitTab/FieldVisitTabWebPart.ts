@@ -16,8 +16,6 @@ import ServiceFactory from './services/ServiceFactory';
 export interface IFieldVisitTabWebPartProps {
   groupName: string;
   groupId: string;
-  owmApiKey: string;
-  mapApiKey: string;
   teamId: string;
   channelId: string;
 }
@@ -118,15 +116,6 @@ export default class FieldVisitTabWebPart extends BaseClientSideWebPart<IFieldVi
                 }),
                 PropertyPaneTextField('groupId', {
                   label: strings.GroupIdLabel
-                }),
-                PropertyPaneTextField('owmApiKey', {
-                  label: strings.OpenWeatherMapsApiKeyLabel
-                }),
-                PropertyPaneTextField('mapApiKey', {
-                  label: strings.MapApiKeyLabel
-                }),
-                PropertyPaneTextField('teamId', {
-                  label: strings.TeamIdLabel
                 }),
                 PropertyPaneTextField('channelId', {
                   label: strings.ChannelIdLabel

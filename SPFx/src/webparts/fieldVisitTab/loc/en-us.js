@@ -1,12 +1,9 @@
 define([], function() {
   return {
-    "PropertyPaneDescription": "Description",
-    "BasicGroupName": "Group Name",
+    "PropertyPaneDescription": "Web part to display team calendar and field visit details",
+    "BasicGroupName": "These settings are automatic in a Teams tab",
     "GroupNameLabel": "Group Name",
-    "GroupIdLabel": "Group ID",
-    "OpenWeatherMapsApiKeyLabel": "Open Weather Maps API key",
-    "MapApiKeyLabel": "Bing Maps API key",
-    "TeamIdLabel": "Team ID",
+    "GroupIdLabel": "Group/Team ID",
     "ChannelIdLabel": "Channel ID"
   }
 });

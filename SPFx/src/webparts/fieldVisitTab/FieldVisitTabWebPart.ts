@@ -16,7 +16,6 @@ import ServiceFactory from './services/ServiceFactory';
 export interface IFieldVisitTabWebPartProps {
   groupName: string;
   groupId: string;
-  teamId: string;
   channelId: string;
 }
 
@@ -66,7 +65,7 @@ export default class FieldVisitTabWebPart extends BaseClientSideWebPart<IFieldVi
     );
     const conversationService = ServiceFactory.getConversationService(
       Environment.type, this.context, this.context.serviceScope,
-      this.properties.teamId, this.properties.channelId
+      this.groupId, this.channelId
     );
     const photoService = ServiceFactory.getPhotoService(
       Environment.type, this.context, this.context.serviceScope

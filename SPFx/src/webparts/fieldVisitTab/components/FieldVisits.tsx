@@ -138,13 +138,20 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
   private handleUserSelectionChanged(user: IUser) {
     var oldUsers = this.state.users;
     var newUsers: IUser[] = [];
+    // ** use this code to allow only one user to be selected **
     oldUsers.forEach((u) => {
       let newUser = u;
-      if (u.email == user.email) {
-        newUser.isSelected = !u.isSelected;
-      }
+      newUser.isSelected = u.email == user.email;
       newUsers.push(newUser);
     });
+    // ** use this code to allow multuple users to be selected **
+    // oldUsers.forEach((u) => {
+    //   let newUser = u;
+    //   if (u.email == user.email) {
+    //     newUser.isSelected = !u.isSelected;
+    //   }
+    //   newUsers.push(newUser);
+    // });
     var fv = this.filterVisitsBySelectedUsers(this.state.allVisits, newUsers);
     var sv = fv.filter((v) => (v == this.state.selectedVisit)).length > 0 ?
       this.state.selectedVisit : null;

@@ -10,6 +10,7 @@ export interface IPostToChannelProps {
     channelId: string;
     entityId: string;
     teamsApplicationId: string;
+    selectedUser: string;
     customerId: string;
     customerName: string;
     address: string;
@@ -63,12 +64,16 @@ export class PostToChannel extends React.Component<IPostToChannelProps, IPostToC
 
     private handleClick(event) {
 
+        // Build a deep link to the current user tab and customer
         const url = encodeURI(
             'https://teams.microsoft.com/l/entity/' +
             this.props.teamsApplicationId + '/' +
             this.props.entityId + 
             '?label=Vi32&' +
-            'context={"subEntityId": "Katie Jordan:THEBI", "channelId": "' + this.props.channelId + '"}');
+            'context={"subEntityId": "' + 
+              this.props.selectedUser + ':' +
+              this.props.customerId +
+              '", "channelId": "' + this.props.channelId + '"}');
 
         const message = 
         `

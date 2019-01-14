@@ -79,6 +79,7 @@ export default class FieldVisitTabWebPart extends BaseClientSideWebPart<IFieldVi
         groupId: this.groupId,
         channelId: this.teamsContext.channelId,
         entityId: this.teamsContext.entityId,
+        subEntityId: this.teamsContext.subEntityId,
         teamsApplicationId: 'ed686d10-9382-4c3b-be6b-1957d4ec9692',
         visitService: visitService,
         weatherService: weatherService,

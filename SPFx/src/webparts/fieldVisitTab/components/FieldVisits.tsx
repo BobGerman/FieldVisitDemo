@@ -36,6 +36,7 @@ export interface IFieldVisitsProps {
   channelId: string;
   teamsApplicationId: string;
   entityId: string;
+  subEntityId: string;
 }
 
 export interface IFieldVisitsState {
@@ -44,6 +45,7 @@ export interface IFieldVisitsState {
   allVisits?: IVisit[];
   filteredVisits?: IVisit[];
   selectedVisit?: IVisit;
+  subEntityId: string;
 }
 
 export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisitsState> {
@@ -55,7 +57,8 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
       users: [],
       allVisits: [],
       filteredVisits: [],
-      selectedVisit: null   // NOTE If defined, selectedVisit should reference a member of visits[]
+      selectedVisit: null,   // NOTE If defined, selectedVisit should reference a member of visits[]
+      subEntityId: props.subEntityId
     };
   }
 
@@ -78,6 +81,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
 
     if (this.state.dataFetched) {
 
+      // Unpack data
       let address: string = null;
       let city: string = null;
       let state: string = null;
@@ -94,6 +98,34 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
         customerId = this.state.selectedVisit.customer.CustomerID;
         customerName = this.state.selectedVisit.customer.CompanyName;
       }
+
+      // Handle deep link, if any
+      let userChanged = false;
+      if (this.state.subEntityId) {
+        let [deeplinkUser, deeplinkCustomerId] = this.props.subEntityId.split(':');
+
+        this.state.users.forEach(user => {
+          if (user.email == deeplinkUser && !user.isSelected) {
+            userChanged = true;
+            this.handleUserSelectionChanged(user);
+          }
+        });
+
+        if (!userChanged) {
+          this.state.filteredVisits.forEach(visit => {
+            if (visit.customer.CustomerID == deeplinkCustomerId) {
+              this.handleVisitSelectionChanged(visit);
+            }
+            this.setState({
+              subEntityId: null
+            });    
+          });
+          }
+      }
+
+      // Get currently selected user
+      let selectedUser = "";
+      this.state.users.forEach((user) => { if (user.isSelected) { selectedUser = user.email; }});
 
       return (
 
@@ -123,6 +155,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
                 teamsApplicationId={this.props.teamsApplicationId}
                 customerId={customerId}
                 customerName={customerName}
+                selectedUser={selectedUser}
                 address={address}
                 city={city}
                 state={state}

@@ -7,6 +7,9 @@ import { IConversationService } from '../services/ConversationService/IConversat
 import { INewChatThread, ContentType } from '../model/IConversation';
 
 export interface IPostToChannelProps {
+    channelId: string;
+    entityId: string;
+    teamsApplicationId: string;
     customerId: string;
     customerName: string;
     address: string;
@@ -59,16 +62,24 @@ export class PostToChannel extends React.Component<IPostToChannelProps, IPostToC
     }
 
     private handleClick(event) {
+
+        const url = encodeURI(
+            'https://teams.microsoft.com/l/entity/' +
+            this.props.teamsApplicationId + '/' +
+            this.props.entityId + 
+            '?label=Vi32&' +
+            'context={"subEntityId": "Katie Jordan:THEBI", "channelId": "' + this.props.channelId + '"}');
+
         const message = 
         `
         <div style="border-style:solid; border-width:1px; padding:10px;">
-          <div style="background: green; color: white">
-            Regarding ${this.props.customerName}
+          <div>${this.state.value}</div>
+          <hr />
+          <div style="background: #eaeaff; font-weight: bold ">
+            <a href="${url}">${this.props.customerName}</a>
           </div>
           ${this.props.address}<br />
           ${this.props.city}, ${this.props.state} ${this.props.postalCode}<br />
-          <hr />
-          ${this.state.value}
         </div><br />
         `
         ;

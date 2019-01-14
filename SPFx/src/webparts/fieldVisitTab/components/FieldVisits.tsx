@@ -33,6 +33,9 @@ export interface IFieldVisitsProps {
   currentUserEmail: string;
   groupName: string;
   groupId: string;
+  channelId: string;
+  teamsApplicationId: string;
+  entityId: string;
 }
 
 export interface IFieldVisitsState {
@@ -115,7 +118,10 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
               <Weather service={this.props.weatherService}
                 country={country} postalCode={postalCode} />
               <CompanyInfo visit={this.state.selectedVisit} />
-              <PostToChannel customerId={customerId}
+              <PostToChannel channelId={this.props.channelId}
+                entityId={this.props.entityId}
+                teamsApplicationId={this.props.teamsApplicationId}
+                customerId={customerId}
                 customerName={customerName}
                 address={address}
                 city={city}

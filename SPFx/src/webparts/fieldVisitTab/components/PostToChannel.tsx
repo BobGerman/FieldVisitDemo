@@ -48,7 +48,8 @@ export class PostToChannel extends React.Component<IPostToChannelProps, IPostToC
                         <div className={styles.postToChannelButtonColumn}>
                             <input type='button' value='Send'
                                 onClick={this.handleClick.bind(this)}
-                                className={styles.postToChannelButton} />
+                                className={styles.postToChannelButton}
+                                {...this.props.entityId ? '' : 'disabled'} />
                         </div>
                     </div>
                 </div>

@@ -27,9 +27,13 @@ export default class FieldVisitTabWebPart extends BaseClientSideWebPart<IFieldVi
   private channelId: string;
 
   protected onInit(): Promise<any> {
-    let retVal: Promise<any> = Promise.resolve();
+
+    let p: Promise<any> = Promise.resolve();
+
     if (this.context.microsoftTeams) {
-      retVal = new Promise((resolve, reject) => {
+
+      // Get configuration from the Teams SDK
+      p = new Promise((resolve, reject) => {
         this.context.microsoftTeams.getContext(context => {
           this.teamsContext = context;
           this.groupName = context.teamName;
@@ -38,16 +42,22 @@ export default class FieldVisitTabWebPart extends BaseClientSideWebPart<IFieldVi
           resolve();
         });
       });
+
     } else {
+
+      // Get configuration from web part settings
       this.groupName = this.properties.groupName;
       this.groupId = this.properties.groupId;
       this.channelId = this.properties.channelId;
+
     }
-    return retVal;
+
+    return p;
   }
 
   public render(): void {
 
+    // Get services needed for the mashup
     const visitService = ServiceFactory.getVisitService(
       Environment.type, this.context, this.context.serviceScope
     );
@@ -71,7 +81,7 @@ export default class FieldVisitTabWebPart extends BaseClientSideWebPart<IFieldVi
       Environment.type, this.context, this.context.serviceScope
     );
 
-
+    // Render the mashup
     const element: React.ReactElement<IFieldVisitsProps> = React.createElement(
       FieldVisits,
       {

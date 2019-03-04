@@ -36,7 +36,7 @@ export class Photos extends React.Component<IPhotosProps, IPhotosState> {
                     return (
                         <div>
                             {this.state.photos.map(photo => (
-                                <div>}
+                                <div>
                                     <img src={photo.url} width='200px' /><br />
                                     {photo.name}
                                 </div>

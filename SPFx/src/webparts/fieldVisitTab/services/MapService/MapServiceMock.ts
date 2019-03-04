@@ -90,4 +90,17 @@ export default class MapServiceMock implements IMapService {
     public getMapApiKey(): string {
         return constants.mapApiKey;
     }
+
+    public getMapImageUrl(address: string, city: string, state: string,
+        country: string, postalCode: string): Promise<string> {
+
+            return new Promise<string>((resolve, reject) => {
+                const apiKey = this.getMapApiKey();
+                const latitude = 42.36787;
+                const longitude = -71.18928;
+                resolve (`https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/${latitude},${longitude}/16?mapSize=450,600&pp=${latitude},${longitude}&key=${apiKey}`);
+        
+            });
+    }
+
 }

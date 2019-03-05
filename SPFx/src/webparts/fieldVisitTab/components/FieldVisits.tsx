@@ -161,7 +161,8 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
                 state={state}
                 country={country}
                 postalCode={postalCode}
-                conversationService={this.props.conversationService} />
+                conversationService={this.props.conversationService} 
+                mapService={this.props.mapService} />
               <Map service={this.props.mapService}
                 address={address} city={city} state={state}
                 country={country} postalCode={postalCode} />

@@ -82,7 +82,7 @@ export default class MapService implements IMapService {
                         })
                         .catch ((error: string) => {
                             resolve('#');
-                        })
+                        });
                     }
             }
         });

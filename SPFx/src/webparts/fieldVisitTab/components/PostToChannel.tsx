@@ -80,50 +80,26 @@ export class PostToChannel extends React.Component<IPostToChannelProps, IPostToC
             this.props.customerId +
             '", "channelId": "' + this.props.channelId + '"}');
 
-        var message = "";
-        // this.props.mapService.getMapImageUrl(
-        //     this.props.address, this.props.city,
-        //     this.props.state, this.props.country, this.props.postalCode)
+        var message =
+            `
+            <div style="border-style:solid; border-width:1px; padding:10px;">
+            <div>${this.state.value}</div>
+            <hr />
+            <div style="background: #eaeaff; font-weight: bold ">
+                <a href="${url}">${this.props.customerName}</a>
+            </div>
+            ${this.props.address}<br />
+            ${this.props.city}, ${this.props.state} ${this.props.postalCode}<br />
+            </div><br />
+            `
+            ;
 
-        //     .then((mapUrl) => {
+        this.props.conversationService
+            .createChatThread(message, ContentType.html)
+            .then(() => {
+                this.setState({ value: '' });
+            });
 
-        //         if (mapUrl && mapUrl !== "#") {
-        //             message =
-        //                 `
-        //                 <div style="border-style:solid; border-width:1px; padding:10px;">
-        //                 <div>${this.state.value}</div>
-        //                 <hr />
-        //                 <div style="background: #eaeaff; font-weight: bold ">
-        //                     <a href="${url}">${this.props.customerName}</a>
-        //                 </div>
-        //                 <img src="${mapUrl}"></img>
-        //                 </div><br />
-        //                 `
-        //                 ;
-
-        //         } else {
-                    message =
-                        `
-                        <div style="border-style:solid; border-width:1px; padding:10px;">
-                        <div>${this.state.value}</div>
-                        <hr />
-                        <div style="background: #eaeaff; font-weight: bold ">
-                            <a href="${url}">${this.props.customerName}</a>
-                        </div>
-                        ${this.props.address}<br />
-                        ${this.props.city}, ${this.props.state} ${this.props.postalCode}<br />
-                        </div><br />
-                        `
-                        ;
-                // }
-
-                this.props.conversationService
-                    .createChatThread(message, ContentType.html)
-                    .then(() => {
-                        this.setState({ value: '' });
-                    });
-
-            // });
     }
 
 }

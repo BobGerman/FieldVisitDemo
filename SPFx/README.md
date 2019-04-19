@@ -21,7 +21,7 @@ The solution demonstrates:
 
 ## Used SharePoint Framework Version
 
-![drop](https://img.shields.io/badge/drop-1.7.0-green.svg)
+![drop](https://img.shields.io/badge/drop-1.8.0-green.svg)
 
 ## Applies to
 

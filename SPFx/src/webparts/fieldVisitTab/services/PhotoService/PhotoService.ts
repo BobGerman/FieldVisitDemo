@@ -4,15 +4,13 @@ import { IPhoto } from '../../model/IPhoto';
 
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import { ServiceScope } from '@microsoft/sp-core-library';
-import { SPHttpClient, SPHttpClientResponse } from '@microsoft/sp-http';
+import { SPHttpClient } from '@microsoft/sp-http';
 
 export default class PhotoService implements IPhotoService {
 
     private context: IWebPartContext;
-    private serviceScope: ServiceScope;
     constructor(context: IWebPartContext, serviceScope: ServiceScope) {
         this.context = context;
-        this.serviceScope = serviceScope;
     }
 
     public getPhotos(customerId: string): Promise<IPhoto[]> {

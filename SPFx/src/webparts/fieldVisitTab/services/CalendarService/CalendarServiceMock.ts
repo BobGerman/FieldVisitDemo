@@ -1,6 +1,5 @@
 import { ICalendarService } from './ICalendarService';
 import { ICalendarItem } from '../../model/ICalendarItem';
-import { IUser } from '../../model/IUser';
 
 export default class CalendarServiceMock implements ICalendarService {
 
@@ -31,7 +30,7 @@ export default class CalendarServiceMock implements ICalendarService {
         }
     ];
 
-    public getGroupCalendarItems(groupId: string) {
+    public getGroupCalendarItems(groupId?: string) {
         return new Promise<ICalendarItem[]>((resolve) => {
             resolve(this.mockItems);
         });

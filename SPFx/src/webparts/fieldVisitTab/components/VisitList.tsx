@@ -1,13 +1,11 @@
 import * as React from 'react';
-import { escape, isEmpty } from '@microsoft/sp-lodash-subset';
 import styles from './FieldVisits.module.scss';
 
 import { IVisit } from '../model/IVisit';
-import { IUser } from '../model/IUser';
 
 export interface IVisitListProps {
-  visits: IVisit[];
-  selectedVisit: IVisit;
+  visits?: IVisit[];
+  selectedVisit?: IVisit;
   visitSelectionChanged: (IVisit) => {};
 }
 
@@ -18,7 +16,7 @@ export class VisitList extends React.Component<IVisitListProps, {}> {
     return (
       <div>
         <div className={styles.visitList}>
-          {this.props.visits.map(item => (
+          {this.props.visits ? this.props.visits.map(item => (
             <div className={ (item == this.props.selectedVisit) ?
                               styles.visitListRow + ' ' + styles.visitListRowSelected : styles.visitListRow }
                 onClick={ () => { this.props.visitSelectionChanged(item); }}
@@ -49,7 +47,7 @@ export class VisitList extends React.Component<IVisitListProps, {}> {
                 </div>
               </div>
             </div>
-          )) }
+          )) : <div></div> }
         </div>
       </div>
     );

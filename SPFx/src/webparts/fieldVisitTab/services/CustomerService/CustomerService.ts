@@ -3,16 +3,14 @@ import { ICustomer } from '../../model/ICustomer';
 
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import { ServiceScope } from '@microsoft/sp-core-library';
-import { HttpClient, HttpClientResponse } from '@microsoft/sp-http';
+import { HttpClient } from '@microsoft/sp-http';
 
 
 export default class CustomerService implements ICustomerService {
 
     private context: IWebPartContext;
-    private serviceScope: ServiceScope;
     constructor(context: IWebPartContext, serviceScope: ServiceScope) {
         this.context = context;
-        this.serviceScope = serviceScope;
     }
 
     public getCustomer(customerID: string): Promise<ICustomer> {

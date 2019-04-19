@@ -13,6 +13,6 @@
   },
   "externals": {},
   "localizedResources": {
-    "FieldVisitTabWebPartStrings": "lib/webparts/fieldVisitTab/loc/{locale}.js"
+    "FieldVisitTabWebPartStrings": "lib/webparts/fieldVisitTab/loc/{locale}.js",
   }
 }

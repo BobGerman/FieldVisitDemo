@@ -3,16 +3,14 @@ import { IWeatherConditions } from '../../model/IWeatherConditions';
 
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import { ServiceScope } from '@microsoft/sp-core-library';
-import { HttpClient, HttpClientResponse } from '@microsoft/sp-http';
+import { HttpClient } from '@microsoft/sp-http';
 import * as constants from '../../constants';
 
 export default class WeatherService implements IWeatherService {
 
     private context: IWebPartContext;
-    private serviceScope: ServiceScope;
     constructor(context: IWebPartContext, serviceScope: ServiceScope) {
         this.context = context;
-        this.serviceScope = serviceScope;
     }
 
     public getConditions (zip: string) : Promise<IWeatherConditions> {

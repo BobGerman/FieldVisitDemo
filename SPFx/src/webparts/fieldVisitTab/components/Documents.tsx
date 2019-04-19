@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { escape, isEmpty } from '@microsoft/sp-lodash-subset';
 import styles from './FieldVisits.module.scss';
 
 import { IDocumentService } from '../services/DocumentService/IDocumentService';
@@ -11,8 +10,8 @@ export interface IDocumentProps {
 }
 
 export interface IDocumentState {
-    documents: IDocument[];
-    currentCustomerId: string;
+    documents: IDocument[] | null;
+    currentCustomerId: string | null;
 }
 
 export class Documents extends React.Component<IDocumentProps, IDocumentState> {

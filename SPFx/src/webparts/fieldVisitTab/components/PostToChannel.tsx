@@ -1,14 +1,12 @@
 import * as React from 'react';
-import { escape, isEmpty } from '@microsoft/sp-lodash-subset';
 import styles from './FieldVisits.module.scss';
-import { inputProperties } from '../../../../node_modules/@uifabric/utilities';
 
+import { ContentType } from '../model/IConversation';
 import { IConversationService } from '../services/ConversationService/IConversationService';
-import { INewChatThread, ContentType } from '../model/IConversation';
 import { IMapService } from '../services/MapService/IMapService';
 
 export interface IPostToChannelProps {
-    channelId: string;
+    channelId?: string;
     entityId: string;
     teamsApplicationId: string;
     selectedUser: string;

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { escape, isEmpty } from '@microsoft/sp-lodash-subset';
 import styles from './FieldVisits.module.scss';
 
 import { IMapService } from '../services/MapService/IMapService';
@@ -14,8 +13,8 @@ export interface IMapProps {
 }
 
 export interface IMapState {
-    locationSignature: string;
-    mapUrl: string;
+    locationSignature?: string;
+    mapUrl?: string;
 }
 
 export class Map extends React.Component<IMapProps, IMapState> {
@@ -23,8 +22,8 @@ export class Map extends React.Component<IMapProps, IMapState> {
     constructor(props: IMapProps) {
         super(props);
         this.state = {
-            locationSignature: null,
-            mapUrl: null
+            locationSignature: undefined,
+            mapUrl: undefined
         };
     }
 

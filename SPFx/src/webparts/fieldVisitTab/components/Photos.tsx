@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { escape, isEmpty } from '@microsoft/sp-lodash-subset';
-import styles from './FieldVisits.module.scss';
 import { IPhoto } from '../model/IPhoto';
 
 import { IPhotoService } from '../services/PhotoService/IPhotoService';
@@ -11,8 +9,8 @@ export interface IPhotosProps {
 }
 
 export interface IPhotosState {
-    photos: IPhoto[];
-    currentCustomerId: string;
+    photos?: IPhoto[];
+    currentCustomerId?: string;
 }
 
 export class Photos extends React.Component<IPhotosProps, IPhotosState> {
@@ -20,8 +18,8 @@ export class Photos extends React.Component<IPhotosProps, IPhotosState> {
     constructor(props: IPhotosProps) {
         super(props);
         this.state = {
-            photos: null,
-            currentCustomerId: null
+            photos: undefined,
+            currentCustomerId: undefined
         };
     }
 

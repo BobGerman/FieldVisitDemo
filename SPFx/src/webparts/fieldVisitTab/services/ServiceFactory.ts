@@ -93,10 +93,11 @@ export default class ServiceFactory {
         environmentType: EnvironmentType,
         context: WebPartContext,
         serviceScope: ServiceScope,
-        teamId: string,
-        channelId: string): IConversationService {
+        teamId?: string,
+        channelId?: string): IConversationService {
 
-        return (environmentType === EnvironmentType.Local) ?
+        return (environmentType === EnvironmentType.Local ||
+                !teamId || !channelId ) ?
             new ConversationServiceMock() :
             new ConversationServiceTeams(context, serviceScope, teamId, channelId);
     }

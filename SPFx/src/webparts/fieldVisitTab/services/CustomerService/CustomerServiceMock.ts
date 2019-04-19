@@ -17,7 +17,7 @@ export default class CustomerServiceMock implements ICustomerService {
         "PostalCode": "97403",
         "Country": "USA",
         "Phone": "(503) 555-7555",
-        "Fax": null
+        "Fax": ""
         },
         {
         "CustomerID": "HUNGC",
@@ -56,7 +56,7 @@ export default class CustomerServiceMock implements ICustomerService {
         "PostalCode": "94117",
         "Country": "USA",
         "Phone": "(415) 555-5938",
-        "Fax": null
+        "Fax": ""
         },
         {
         "CustomerID": "LONEP",
@@ -108,7 +108,7 @@ export default class CustomerServiceMock implements ICustomerService {
         "PostalCode": "83720",
         "Country": "USA",
         "Phone": "(208) 555-8097",
-        "Fax": null
+        "Fax": ""
         },
         {
         "CustomerID": "SPLIR",
@@ -134,7 +134,7 @@ export default class CustomerServiceMock implements ICustomerService {
         "PostalCode": "97201",
         "Country": "USA",
         "Phone": "(503) 555-3612",
-        "Fax": null
+        "Fax": ""
         },
         {
         "CustomerID": "THECR",

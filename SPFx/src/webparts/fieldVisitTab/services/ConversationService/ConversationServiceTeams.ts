@@ -4,19 +4,16 @@ import { IConversationService } from '../../services/ConversationService/IConver
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { ServiceScope } from '@microsoft/sp-core-library';
 import { MSGraphClient } from '@microsoft/sp-http';
-import * as MicrosoftGraph from '@microsoft/microsoft-graph-types';
 
 export default class ConversationServiceTeams implements IConversationService {
 
     private context: WebPartContext;
-    private serviceScope: ServiceScope;
     private teamId: string;
     private channelId: string;
 
     constructor(context: WebPartContext, serviceScope: ServiceScope,
                 teamId: string, channelId: string) {
         this.context = context;
-        this.serviceScope = serviceScope;
         this.teamId = teamId;
         this.channelId = channelId;
     }

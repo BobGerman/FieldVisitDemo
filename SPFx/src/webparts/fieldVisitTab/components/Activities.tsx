@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { escape, isEmpty } from '@microsoft/sp-lodash-subset';
 import styles from './FieldVisits.module.scss';
 
 import { IActivityService } from '../services/ActivityService/IActivityService';
@@ -11,8 +10,8 @@ export interface IActivityProps {
 }
 
 export interface IActivityState {
-    activities: IActivity[];
-    currentCustomerId: string;
+    activities?: IActivity[];
+    currentCustomerId?: string;
 }
 
 export class Activities extends React.Component<IActivityProps, IActivityState> {
@@ -20,8 +19,8 @@ export class Activities extends React.Component<IActivityProps, IActivityState> 
     constructor(props: IActivityProps) {
         super(props);
         this.state = {
-            activities: null,
-            currentCustomerId: null
+            activities: undefined,
+            currentCustomerId: undefined
         };
     }
 

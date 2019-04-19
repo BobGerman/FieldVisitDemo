@@ -12,58 +12,67 @@ interface CalendarView { value: MicrosoftGraph.Event[]; }
 export default class CalendarService implements ICalendarService {
 
     private context: WebPartContext;
-    private serviceScope: ServiceScope;
     constructor(context: WebPartContext, serviceScope: ServiceScope) {
         this.context = context;
-        this.serviceScope = serviceScope;
     }
 
-    public getGroupCalendarItems(groupId: string, groupName: string) {
+    public getGroupCalendarItems(groupId?: string, groupName?: string) {
 
-        var result = new Promise<ICalendarItem[]>((resolve, reject) => {
+        if (groupId && groupName) {
+            var result = new Promise<ICalendarItem[]>((resolve, reject) => {
 
-            const now = Date.now();
-            const startDateTime = this.formatDateForRest(new Date(now));
-            const endDateTime = this.formatDateForRest(new Date(now + 7 * 24 * 60 * 60 * 1000));
+                const now = Date.now();
+                const startDateTime = this.formatDateForRest(new Date(now));
+                const endDateTime = this.formatDateForRest(new Date(now + 7 * 24 * 60 * 60 * 1000));
 
-            this.context.msGraphClientFactory
-                .getClient()
-                .then((graphClient: MSGraphClient): void => {
-                    graphClient.api(`/groups/${groupId}/calendarview?startdatetime=${startDateTime}&enddatetime=${endDateTime}`)
-                        .get((error, data: CalendarView, rawResponse?: any) => {
+                this.context.msGraphClientFactory
+                    .getClient()
+                    .then((graphClient: MSGraphClient): void => {
+                        graphClient.api(`/groups/${groupId}/calendarview?startdatetime=${startDateTime}&enddatetime=${endDateTime}`)
+                            .get((error, data: CalendarView, rawResponse?: any) => {
 
-                            let calendarItems: ICalendarItem[] = [];
-                            data.value.forEach((event) => {
-
-                                if (event.attendees) {
+                                let calendarItems: ICalendarItem[] = [];
+                                data.value.forEach((event) => {
 
                                     let attendees: IUser[] = [];
-                                    event.attendees.forEach((user) => {
-                                        if (user.emailAddress.name.toLowerCase() !=
-                                            groupName.toLowerCase()) {
-                                            attendees.push({
-                                                fullName: user.emailAddress.name,
-                                                email: user.emailAddress.address
+                                    if (event.attendees) {
+
+                                        event.attendees.forEach((user) => {
+                                            if (user.emailAddress &&
+                                                user.emailAddress.name &&
+                                                user.emailAddress.address &&
+                                                user.emailAddress.name.toLowerCase() != groupName.toLowerCase()) {
+                                                attendees.push({
+                                                    fullName: user.emailAddress.name,
+                                                    email: user.emailAddress.address
+                                                });
+                                            }
+                                        });
+
+                                        if (event.start && event.start.dateTime) {
+                                            calendarItems.push({
+                                                Title: event.subject,
+                                                DateTime: new Date(event.start.dateTime),
+                                                Attendees: attendees
                                             });
                                         }
-                                    });
+                                    }
+                                });
+                                resolve(calendarItems);
 
-                                    calendarItems.push({
-                                        Title: event.subject,
-                                        DateTime: new Date(event.start.dateTime),
-                                        Attendees: attendees
-                                    });
-                                }
                             });
-                            resolve(calendarItems);
 
-                        });
+                    });
 
-                });
+            });
 
-        });
+            return result;
 
-        return result;
+        } else {
+
+            // If here, either group id or name were blank
+            return Promise.resolve([]);
+        }
     }
 
     // formatDateForRest() - The O365 REST API wants ISO format with the milliseconds not present,

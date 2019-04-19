@@ -3,7 +3,7 @@
   "solution": {
     "name": "field-visit-demo-tab-client-side-solution",
     "id": "67407b5b-e3eb-480a-97a3-195810f83702",
-    "version": "1.0.0.0",
+    "version": "1.0.1.0",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "webApiPermissionRequests": [

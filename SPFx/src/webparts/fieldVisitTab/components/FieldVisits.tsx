@@ -1,6 +1,5 @@
 import * as React from 'react';
 import styles from './FieldVisits.module.scss';
-import { escape } from '@microsoft/sp-lodash-subset';
 import { IVisitService } from '../services/VisitService/IVisitService';
 import { IWeatherService } from '../services/WeatherService/IWeatherService';
 import { IMapService } from '../services/MapService/IMapService';
@@ -31,12 +30,12 @@ export interface IFieldVisitsProps {
   conversationService: IConversationService;
   photoService: IPhotoService;
   currentUserEmail: string;
-  groupName: string;
-  groupId: string;
-  channelId: string;
+  groupName?: string;
+  groupId?: string;
+  channelId?: string;
   teamsApplicationId: string;
   entityId: string;
-  subEntityId: string;
+  subEntityId?: string;
 }
 
 export interface IFieldVisitsState {
@@ -45,7 +44,7 @@ export interface IFieldVisitsState {
   allVisits?: IVisit[];
   filteredVisits?: IVisit[];
   selectedVisit?: IVisit;
-  subEntityId: string;
+  subEntityId?: string;
 }
 
 export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisitsState> {
@@ -57,7 +56,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
       users: [],
       allVisits: [],
       filteredVisits: [],
-      selectedVisit: null,   // NOTE If defined, selectedVisit should reference a member of visits[]
+      selectedVisit: undefined,   // NOTE If defined, selectedVisit should reference a member of visits[]
       subEntityId: props.subEntityId
     };
   }
@@ -73,7 +72,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
             users: u,
             allVisits: visits,
             filteredVisits: fv,
-            selectedVisit: null,
+            selectedVisit: undefined,
             dataFetched: true
           });
         });
@@ -82,13 +81,13 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
     if (this.state.dataFetched) {
 
       // Unpack data
-      let address: string = null;
-      let city: string = null;
-      let state: string = null;
-      let country: string = null;
-      let postalCode: string = null;
-      let customerId: string = null;
-      let customerName: string = null;
+      let address: string = "";
+      let city: string = "";
+      let state: string = "";
+      let country: string = "";
+      let postalCode: string = "";
+      let customerId: string = "";
+      let customerName: string = "";
       if (this.state.selectedVisit && this.state.selectedVisit.customer) {
         address = this.state.selectedVisit.customer.Address;
         city = this.state.selectedVisit.customer.City;
@@ -102,30 +101,37 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
       // Handle deep link, if any
       let userChanged = false;
       if (this.state.subEntityId) {
-        let [deeplinkUser, deeplinkCustomerId] = this.props.subEntityId.split(':');
+        let [deeplinkUser, deeplinkCustomerId] = this.props.subEntityId ?
+          this.props.subEntityId.split(':') : ["", ""];
 
-        this.state.users.forEach(user => {
-          if (user.email == deeplinkUser && !user.isSelected) {
-            userChanged = true;
-            this.handleUserSelectionChanged(user);
-          }
-        });
+        if (this.state.users) {
+          this.state.users.forEach(user => {
+            if (user.email == deeplinkUser && !user.isSelected) {
+              userChanged = true;
+              this.handleUserSelectionChanged(user);
+            }
+          });
+        }
 
         if (!userChanged) {
-          this.state.filteredVisits.forEach(visit => {
-            if (visit.customer.CustomerID == deeplinkCustomerId) {
-              this.handleVisitSelectionChanged(visit);
-            }
-            this.setState({
-              subEntityId: null
-            });    
-          });
+          if (this.state.filteredVisits) {
+            this.state.filteredVisits.forEach(visit => {
+              if (visit.customer.CustomerID == deeplinkCustomerId) {
+                this.handleVisitSelectionChanged(visit);
+              }
+              this.setState({
+                subEntityId: undefined
+              });
+            });
           }
+        }
       }
 
       // Get currently selected user
       let selectedUser = "";
-      this.state.users.forEach((user) => { if (user.isSelected) { selectedUser = user.email; }});
+      if (this.state.users) {
+        this.state.users.forEach((user) => { if (user.isSelected) { selectedUser = user.email; } });
+      }
 
       return (
 
@@ -161,7 +167,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
                 state={state}
                 country={country}
                 postalCode={postalCode}
-                conversationService={this.props.conversationService} 
+                conversationService={this.props.conversationService}
                 mapService={this.props.mapService} />
               <Map service={this.props.mapService}
                 address={address} city={city} state={state}
@@ -179,11 +185,13 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
     var oldUsers = this.state.users;
     var newUsers: IUser[] = [];
     // ** use this code to allow only one user to be selected **
-    oldUsers.forEach((u) => {
-      let newUser = u;
-      newUser.isSelected = u.email == user.email;
-      newUsers.push(newUser);
-    });
+    if (oldUsers) {
+      oldUsers.forEach((u) => {
+        let newUser = u;
+        newUser.isSelected = u.email == user.email;
+        newUsers.push(newUser);
+      });  
+    }
     // ** use this code to allow multuple users to be selected **
     // oldUsers.forEach((u) => {
     //   let newUser = u;
@@ -194,7 +202,7 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
     // });
     var fv = this.filterVisitsBySelectedUsers(this.state.allVisits, newUsers);
     var sv = fv.filter((v) => (v == this.state.selectedVisit)).length > 0 ?
-      this.state.selectedVisit : null;
+      this.state.selectedVisit : undefined;
     this.setState({
       users: newUsers,
       filteredVisits: fv,
@@ -208,20 +216,22 @@ export class FieldVisits extends React.Component<IFieldVisitsProps, IFieldVisits
     });
   }
 
-  private filterVisitsBySelectedUsers(visits: IVisit[], users: IUser[]): IVisit[] {
+  private filterVisitsBySelectedUsers(visits: IVisit[] | undefined, users: IUser[]): IVisit[] {
     var result: IVisit[] = [];
 
-    visits.forEach((visit) => {
-      let showVisit = false;
-      visit.calendarItem.Attendees.forEach((attendee) => {
-        if (users.filter((u) => (u.isSelected && u.email == attendee.email)).length > 0) {
-          showVisit = true;
+    if (visits) {
+      visits.forEach((visit) => {
+        let showVisit = false;
+        visit.calendarItem.Attendees.forEach((attendee) => {
+          if (users.filter((u) => (u.isSelected && u.email == attendee.email)).length > 0) {
+            showVisit = true;
+          }
+        });
+        if (showVisit) {
+          result.push(visit);
         }
-      });
-      if (showVisit) {
-        result.push(visit);
-      }
-    });
+      });    
+    }
 
     return result;
   }

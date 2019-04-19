@@ -4,15 +4,13 @@ import { IDocumentsResponse } from './IDocumentsResponse';
 
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import { ServiceScope } from '@microsoft/sp-core-library';
-import { SPHttpClient, SPHttpClientResponse } from '@microsoft/sp-http';
+import { SPHttpClient } from '@microsoft/sp-http';
 
 export default class DocumentService implements IDocumentService {
 
     private context: IWebPartContext;
-    private serviceScope: ServiceScope;
     constructor(context: IWebPartContext, serviceScope: ServiceScope) {
         this.context = context;
-        this.serviceScope = serviceScope;
     }
 
     public getDocuments(customerId: string):

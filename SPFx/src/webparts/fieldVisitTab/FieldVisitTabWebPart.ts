@@ -1,12 +1,13 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
-import { Version, Environment, EnvironmentType } from '@microsoft/sp-core-library';
+import { Version, Environment } from '@microsoft/sp-core-library';
 import {
   BaseClientSideWebPart,
   IPropertyPaneConfiguration,
   PropertyPaneTextField
 } from '@microsoft/sp-webpart-base';
 
+import * as microsoftTeams from '@microsoft/teams-js';
 import * as strings from 'FieldVisitTabWebPartStrings';
 import { IFieldVisitsProps, FieldVisits }
   from './components/FieldVisits';
@@ -21,26 +22,30 @@ export interface IFieldVisitTabWebPartProps {
 
 export default class FieldVisitTabWebPart extends BaseClientSideWebPart<IFieldVisitTabWebPartProps> {
 
-  private teamsContext: microsoftTeams.Context;
-  private groupName: string;
-  private groupId: string;
-  private channelId: string;
+  private teamsContext?: microsoftTeams.Context;
+  private groupName?: string;
+  private groupId?: string;
+  private channelId?: string;
 
   protected onInit(): Promise<any> {
 
     let p: Promise<any> = Promise.resolve();
 
-    if (this.context.microsoftTeams) {
+    if (this.context.microsoftTeams &&
+      this.context.microsoftTeams.getContext) {
 
       // Get configuration from the Teams SDK
       p = new Promise((resolve, reject) => {
-        this.context.microsoftTeams.getContext(context => {
-          this.teamsContext = context;
-          this.groupName = context.teamName;
-          this.groupId = context.groupId;
-          this.channelId = context.channelId;
-          resolve();
-        });
+        if (this.context.microsoftTeams &&
+          this.context.microsoftTeams.getContext) {
+          this.context.microsoftTeams.getContext(context => {
+            this.teamsContext = context;
+            this.groupName = context.teamName;
+            this.groupId = context.groupId;
+            this.channelId = context.channelId;
+            resolve();
+          });
+        }
       });
 
     } else {
@@ -66,7 +71,7 @@ export default class FieldVisitTabWebPart extends BaseClientSideWebPart<IFieldVi
 
     const mapService = ServiceFactory.getMapService(
       Environment.type, this.context, this.context.serviceScope);
-      
+
     const documentService = ServiceFactory.getDocumentService(
       Environment.type, this.context, this.context.serviceScope
     );
@@ -85,12 +90,6 @@ export default class FieldVisitTabWebPart extends BaseClientSideWebPart<IFieldVi
     const element: React.ReactElement<IFieldVisitsProps> = React.createElement(
       FieldVisits,
       {
-        groupName: this.groupName,
-        groupId: this.groupId,
-        channelId: this.channelId,
-        entityId: this.teamsContext ? this.teamsContext.entityId : "",
-        subEntityId: this.teamsContext ? this.teamsContext.subEntityId : "",
-        teamsApplicationId: 'ed686d10-9382-4c3b-be6b-1957d4ec9692',
         visitService: visitService,
         weatherService: weatherService,
         mapService: mapService,
@@ -98,6 +97,12 @@ export default class FieldVisitTabWebPart extends BaseClientSideWebPart<IFieldVi
         activityService: activityService,
         conversationService: conversationService,
         photoService: photoService,
+        groupName: this.groupName,
+        groupId: this.groupId,
+        channelId: this.channelId,
+        entityId: this.teamsContext ? this.teamsContext.entityId : "",
+        subEntityId: this.teamsContext ? this.teamsContext.subEntityId : "",
+        teamsApplicationId: 'ed686d10-9382-4c3b-be6b-1957d4ec9692',
         currentUserEmail: this.context.pageContext.user.email
       }
     );

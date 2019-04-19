@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { escape, isEmpty } from '@microsoft/sp-lodash-subset';
 import styles from './FieldVisits.module.scss';
 
 import { IWeatherService } from '../services/WeatherService/IWeatherService';
-import { IWeatherConditions, IWeather } from '../model/IWeatherConditions';
+import { IWeatherConditions } from '../model/IWeatherConditions';
 
 export interface IWeatherProps {
     service: IWeatherService;
@@ -12,8 +11,8 @@ export interface IWeatherProps {
 }
 
 export interface IWeatherState {
-    conditions: IWeatherConditions;
-    locationSignature: string;
+    conditions?: IWeatherConditions;
+    locationSignature?: string;
 }
 
 export class Weather extends React.Component<IWeatherProps, IWeatherState> {
@@ -21,8 +20,8 @@ export class Weather extends React.Component<IWeatherProps, IWeatherState> {
     constructor(props: IWeatherProps) {
         super(props);
         this.state = {
-            conditions: null,
-            locationSignature: null
+            conditions: undefined,
+            locationSignature: undefined
         };
     }
 

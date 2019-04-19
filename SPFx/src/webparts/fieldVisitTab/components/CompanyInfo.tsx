@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { escape, isEmpty } from '@microsoft/sp-lodash-subset';
 import styles from './FieldVisits.module.scss';
 
 import { IVisit } from '../model/IVisit';
 
 export interface ICompanyInfoProps {
-  visit: IVisit;
+  visit?: IVisit;
 }
 
 export class CompanyInfo extends React.Component<ICompanyInfoProps, {}> {
